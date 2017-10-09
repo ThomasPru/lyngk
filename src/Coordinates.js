@@ -32,6 +32,10 @@ Lyngk.Coordinates = function (co, li) {
         return new Lyngk.Coordinates(c,l);
     }
 
+    this.hash = function(){
+        var hashValue = (c.charCodeAt(c)-64)*10+l;
+        return hashValue;
+    }
 };
 
 
