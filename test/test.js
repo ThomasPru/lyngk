@@ -49,3 +49,10 @@ LyngkTestCase.prototype.testHist7 = function(){
     assertEquals(c.State,0);
 
 }
+
+LyngkTestCase.prototype.testHist8 = function(){
+    var c = new Lyngk.Engine(Lyngk.Color.BLUE);
+    assertEquals(c.state,Lyngk.State.ONE_PIECE);
+    assertEquals(c.getCouleur(),Lyngk.Color.BLUE);
+
+}
