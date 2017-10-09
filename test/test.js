@@ -59,6 +59,9 @@ LyngkTestCase.prototype.testHist8 = function(){
 
 /*
 LyngkTestCase.prototype.testHist9 = function(){
-    var c = new Lyngk.Intersection(Lyngk.Color.BLUE);
-    assertTrue(c.getState() == Lyngk.State.ONE_PIECE && c.getCouleurInt()==Lyngk.Color.BLUE);
-}*/
+    var Inter = new Lyngk.Intersection('B',2);
+    Inter.poserPiece(Lyngk.Color.BLUE);
+    Inter.poserPiece(Lyngk.Color.RED);
+    assertTrue(Inter.getState() == Lyngk.State.STACK && Inter.getCouleurAssociee()==Lyngk.Color.RED );
+}
+*/
