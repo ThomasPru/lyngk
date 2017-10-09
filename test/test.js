@@ -65,3 +65,12 @@ LyngkTestCase.prototype.testHist9 = function(){
     assertTrue(Inter.getState() == Lyngk.State.STACK && Inter.getCouleurAssociee()==Lyngk.Color.RED );
 }
 
+LyngkTestCase.prototype.testHist10 = function(){
+    var Inter = new Lyngk.Intersection('B',2);
+    Inter.poserPiece(Lyngk.Color.BLUE);
+    Inter.poserPiece(Lyngk.Color.RED);
+    Inter.poserPiece(Lyngk.Color.GREEN);
+    Inter.poserPiece(Lyngk.Color.GREEN);
+    Inter.poserPiece(Lyngk.Color.GREEN);
+    assertTrue(Inter.getState() === Lyngk.State.FULL_STACK);
+}
