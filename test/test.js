@@ -50,9 +50,15 @@ LyngkTestCase.prototype.testHist7 = function(){
 
 }
 
-
 LyngkTestCase.prototype.testHist8 = function(){
-    var c = new Lyngk.Intersection(Lyngk.Color.BLUE);
-    assertTrue(c.getState() == Lyngk.State.ONE_PIECE && c.getCouleurInt()==Lyngk.Color.BLUE);
+    var Inter = new Lyngk.Intersection('B',2);
+    Inter.poserPiece(Lyngk.Color.BLUE);
+    assertTrue(Inter.getState() == Lyngk.State.ONE_PIECE && Inter.getCouleurAssociee()==Lyngk.Color.BLUE );
 
 }
+
+/*
+LyngkTestCase.prototype.testHist9 = function(){
+    var c = new Lyngk.Intersection(Lyngk.Color.BLUE);
+    assertTrue(c.getState() == Lyngk.State.ONE_PIECE && c.getCouleurInt()==Lyngk.Color.BLUE);
+}*/

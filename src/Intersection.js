@@ -4,19 +4,27 @@ Lyngk.State = {VACANT: 0, ONE_PIECE: 1, STACK: 2, FULL_STACK: 3};
 
 Lyngk.Intersection = function (c) {
     var State= Lyngk.State.VACANT;
-    var Couleur_Inter = c;
-
-    if(c==Lyngk.Color.BLUE){
-        State= Lyngk.State.ONE_PIECE;
-    }
+    var piece;
+    var couleurAssociee;
 
     this.getState = function () {
         return State;
     }
 
-    this.getCouleurInt = function (){
-        return Couleur_Inter;
+    this.getPiece = function(){
+        return piece;
     }
 
+    this.getCouleurAssociee = function(){
+        return couleurAssociee;
+    }
+
+    this.poserPiece = function(c){
+        piece = new Lyngk.Piece(c);
+        if(c==Lyngk.Color.BLUE) {
+            couleurAssociee=c;
+            State = Lyngk.State.ONE_PIECE;
+        }
+    }
 
 };
