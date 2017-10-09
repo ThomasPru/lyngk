@@ -35,7 +35,13 @@ LyngkTestCase.prototype.testD = function(){
 
 LyngkTestCase.prototype.testE = function(){
     var c = new Lyngk.Coordinates('B',4);
-    console.log(c);
     assertEquals(c.toString(), c.clone().toString());
 }
+
+LyngkTestCase.prototype.testHist6 = function(){
+    var c = new Lyngk.Coordinates('B',4);
+    var hash= c.hash();
+    assertEquals(hash,24);
+}
+
 
