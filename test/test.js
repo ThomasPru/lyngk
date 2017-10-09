@@ -57,11 +57,11 @@ LyngkTestCase.prototype.testHist8 = function(){
 
 }
 
-/*
+
 LyngkTestCase.prototype.testHist9 = function(){
     var Inter = new Lyngk.Intersection('B',2);
     Inter.poserPiece(Lyngk.Color.BLUE);
     Inter.poserPiece(Lyngk.Color.RED);
     assertTrue(Inter.getState() == Lyngk.State.STACK && Inter.getCouleurAssociee()==Lyngk.Color.RED );
 }
-*/
+
