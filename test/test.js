@@ -44,4 +44,8 @@ LyngkTestCase.prototype.testHist6 = function(){
     assertEquals(hash,24);
 }
 
+LyngkTestCase.prototype.testHist7 = function(){
+    var c = new Lyngk.Intersection();
+    assertEquals(c.State,0);
 
+}
