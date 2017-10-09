@@ -33,3 +33,8 @@ LyngkTestCase.prototype.testD = function(){
     assertTrue(c.toString()==="invalid");
 }
 
+LyngkTestCase.prototype.testE = function(){
+    var c = new Lyngk.Coordinates('B',3);
+    assertEquals(c.toString(), c.clone());
+}
+
