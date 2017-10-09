@@ -24,7 +24,7 @@ Lyngk.Coordinates = function (co, li) {
     this.toString = function(){
         return c+l;
     }
-    
+
 };
 
 
