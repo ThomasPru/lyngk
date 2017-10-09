@@ -8,6 +8,6 @@ LyngkTestCase.prototype.testA = function(){
 }
 
 LyngkTestCase.prototype.testB = function(){
-    var c = new Lyngk.Engine();
-    assertTrue(c.validNbCasesValid());
+    var c = new Lyngk.Coordinates();
+    assertFalse(c.validNbCasesValid());
 }
