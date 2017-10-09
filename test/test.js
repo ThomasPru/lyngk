@@ -11,3 +11,8 @@ LyngkTestCase.prototype.testB = function(){
     var c = new Lyngk.Coordinates();
     assertFalse(c.validNbCasesValid());
 }
+
+LyngkTestCase.prototype.testC = function(){
+    var c = new Lyngk.Coordinates();
+    assertFalse(c.CoordinRepresentation());
+}
