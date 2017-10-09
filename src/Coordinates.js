@@ -4,8 +4,8 @@ Lyngk.Coordinates = function (co, li) {
     var c = co;
     var l = li;
 
+
     this.valid = function () {
-        var coord=co+li;
         var array = ['C1',
             'E2','D2','C2','B2',
             'G3','F3','E3','D3','C3','B3','A3',
@@ -15,11 +15,17 @@ Lyngk.Coordinates = function (co, li) {
             'I7','H7','G7','F7','E7','D7','C7',
             'H8','G8','F8','E8',
             'G9'];
-        if(array.indexOf(coord)===-1){
+        if(array.indexOf(c+l)===-1){
             return false;
         }
         return  true;
     }
+
+    this.toString = function(){
+        return c+l;
+    }
+    
 };
+
 
 
