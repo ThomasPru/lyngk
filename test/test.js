@@ -30,6 +30,6 @@ LyngkTestCase.prototype.testC = function(){
 
 LyngkTestCase.prototype.testD = function(){
     var c = new Lyngk.Coordinates('A',1);
-    assertTrue(c.toString()==='invalid');
+    assertTrue(c.toString()==="invalid");
 }
 

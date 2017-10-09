@@ -22,6 +22,9 @@ Lyngk.Coordinates = function (co, li) {
     }
 
     this.toString = function(){
+        if(!this.valid()){
+            return "invalid";
+        }
         return c+l;
     }
 
