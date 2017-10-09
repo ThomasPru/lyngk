@@ -21,21 +21,28 @@ Lyngk.Intersection = function (c) {
         return couleurAssociee;
     }
 
+    this.getTaillePile = function(){
+        return pile.length;
+    }
+
 
     this.poserPiece = function(couleur){
         piece = new Lyngk.Piece(couleur);
         pile.push(couleur);
-        if(couleur==Lyngk.Color.BLUE) {
-            couleurAssociee = couleur;
+        couleurAssociee = couleur;
+        if(pile.length===1){
             State = Lyngk.State.ONE_PIECE;
         }
         else{
-            if(couleur==Lyngk.Color.RED) {
-                couleurAssociee = couleur;
+            if(pile.length>1 && pile.length<5) {
                 State = Lyngk.State.STACK;
             }
+            else{
+                if(pile.length>=5){
+                    State = Lyngk.State.FULL_STACK;
+                }
+            }
         }
-
     }
 
 };
