@@ -34,7 +34,8 @@ LyngkTestCase.prototype.testD = function(){
 }
 
 LyngkTestCase.prototype.testE = function(){
-    var c = new Lyngk.Coordinates('B',3);
-    assertEquals(c.toString(), c.clone());
+    var c = new Lyngk.Coordinates('B',4);
+    console.log(c);
+    assertEquals(c.toString(), c.clone().toString());
 }
 

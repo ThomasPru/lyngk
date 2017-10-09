@@ -28,6 +28,10 @@ Lyngk.Coordinates = function (co, li) {
         return c+l;
     }
 
+    this.clone = function(){
+        return new Lyngk.Coordinates(c,l);
+    }
+
 };
 
 
