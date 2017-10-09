@@ -46,13 +46,14 @@ LyngkTestCase.prototype.testHist6 = function(){
 
 LyngkTestCase.prototype.testHist7 = function(){
     var c = new Lyngk.Intersection();
-    assertEquals(c.State,0);
+    assertEquals(c.getState(),Lyngk.State.VACANT);
 
 }
 
+/*
 LyngkTestCase.prototype.testHist8 = function(){
     var c = new Lyngk.Engine(Lyngk.Color.BLUE);
     assertEquals(c.state,Lyngk.State.ONE_PIECE);
     assertEquals(c.getCouleur(),Lyngk.Color.BLUE);
 
-}
+}*/
