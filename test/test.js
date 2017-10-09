@@ -8,7 +8,6 @@ LyngkTestCase.prototype.testA = function(){
 }
 
 LyngkTestCase.prototype.testB = function(){
-
     var compteur=0;
     var lettre = ['A','B','C','D','E','F','G','H','I'];
 
@@ -20,13 +19,12 @@ LyngkTestCase.prototype.testB = function(){
             }
         }
     }
-    console.log(compteur);
     assertEquals(compteur,43);
 }
 
-/*
+
 LyngkTestCase.prototype.testC = function(){
-    var c = new Lyngk.Coordinates("B",4);
-    assertFalse(c.CoordinRepresentation());
+    var c = new Lyngk.Coordinates('B',4);
+    assertTrue(c.toString()==='B4');
 }
-    */
+
