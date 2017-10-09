@@ -26,17 +26,16 @@ Lyngk.Intersection = function (c) {
         piece = new Lyngk.Piece(couleur);
         pile.push(couleur);
         if(couleur==Lyngk.Color.BLUE) {
-            couleurAssociee=couleur;
+            couleurAssociee = couleur;
             State = Lyngk.State.ONE_PIECE;
         }
-        /*
         else{
-            if(c==Lyngk.Color.RED) {
+            if(couleur==Lyngk.Color.RED) {
                 couleurAssociee = couleur;
                 State = Lyngk.State.STACK;
             }
         }
-        */
+
     }
 
 };
