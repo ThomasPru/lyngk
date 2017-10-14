@@ -53,7 +53,7 @@ LyngkTestCase.prototype.testHist7 = function(){
 LyngkTestCase.prototype.testHist8 = function(){
     var Inter = new Lyngk.Intersection('B',2);
     Inter.poserPiece(Lyngk.Color.BLUE);
-    assertTrue(Inter.getState() == Lyngk.State.ONE_PIECE && Inter.getCouleurAssociee()==Lyngk.Color.BLUE );
+    assertTrue(Inter.getState() === Lyngk.State.ONE_PIECE && Inter.getCouleurAssociee()===Lyngk.Color.BLUE );
 
 }
 
@@ -62,7 +62,7 @@ LyngkTestCase.prototype.testHist9 = function(){
     var Inter = new Lyngk.Intersection('B',2);
     Inter.poserPiece(Lyngk.Color.BLUE);
     Inter.poserPiece(Lyngk.Color.RED);
-    assertTrue(Inter.getState() == Lyngk.State.STACK && Inter.getCouleurAssociee()==Lyngk.Color.RED );
+    assertTrue(Inter.getState() === Lyngk.State.STACK && Inter.getCouleurAssociee()===Lyngk.Color.RED );
 }
 
 LyngkTestCase.prototype.testHist10 = function(){
@@ -75,6 +75,7 @@ LyngkTestCase.prototype.testHist10 = function(){
     assertTrue(Inter.getState() === Lyngk.State.FULL_STACK);
 }
 
+
 //histoire 11
 LyngkTestCase.prototype.testHist11 = function () {
     var jeu = new Lyngk.Engine();
@@ -85,5 +86,5 @@ LyngkTestCase.prototype.testHist11 = function () {
             compteur_one_piece++;
         }
     }
-    assertTrue(compteur_one_piece==43);
+    assertTrue(compteur_one_piece===43);
 }
