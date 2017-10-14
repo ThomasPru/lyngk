@@ -74,3 +74,16 @@ LyngkTestCase.prototype.testHist10 = function(){
     Inter.poserPiece(Lyngk.Color.GREEN);
     assertTrue(Inter.getState() === Lyngk.State.FULL_STACK);
 }
+
+//histoire 11
+LyngkTestCase.prototype.testHist11 = function () {
+    var jeu = new Lyngk.Engine();
+    var compteur_one_piece=0;
+    for(var i=0;i<jeu.plateau.size();i++) {
+        jeu.plateau[i].poserPiece(Lyngk.Color.BLUE);
+        if (jeu.plateau[i].getState() == Lyngk.State.ONE_PIECE){
+            compteur_one_piece++;
+        }
+    }
+    assertTrue(compteur_one_piece==43);
+}
