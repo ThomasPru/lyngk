@@ -7,14 +7,14 @@ Lyngk.Intersection = function (c) {
     var piece;
     var couleurAssociee;
 
-    var pile = [];
+    var pile=[];
 
     this.getState = function () {
         return State;
     }
 
-    this.getPiece = function(){
-        return piece;
+    this.getPieceColorFromPile = function(i){
+        return pile[i].getCouleur();
     }
 
     this.getCouleurAssociee = function(){
@@ -28,8 +28,8 @@ Lyngk.Intersection = function (c) {
 
     this.poserPiece = function(couleur){
         piece = new Lyngk.Piece(couleur);
-        pile.push(couleur);
-        couleurAssociee = couleur;
+        pile.push(piece);
+        couleurAssociee = piece.getCouleur();
         if(pile.length===1){
             State = Lyngk.State.ONE_PIECE;
         }
@@ -43,6 +43,7 @@ Lyngk.Intersection = function (c) {
                 }
             }
         }
+
     }
 
 };
