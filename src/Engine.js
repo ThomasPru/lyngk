@@ -41,7 +41,6 @@ Lyngk.Engine = function () {
             'H8','G8','F8','E8',
             'G9'];
         var lettre = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-
         var couleurPos=[Lyngk.Color.IVORY,Lyngk.Color.BLUE,Lyngk.Color.RED,Lyngk.Color.BLACK,Lyngk.Color.GREEN];
 
         for (var x = 0; x < lettre.length; x++) {

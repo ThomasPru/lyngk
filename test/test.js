@@ -75,7 +75,6 @@ LyngkTestCase.prototype.testHist10 = function(){
     assertTrue(Inter.getState() === Lyngk.State.FULL_STACK);
 }
 
-
 //histoire 11
 LyngkTestCase.prototype.testHist11 = function () {
     var jeu = new Lyngk.Engine();
@@ -90,7 +89,6 @@ LyngkTestCase.prototype.testHist11 = function () {
 
     assertEquals(compteur_one_piece,43);
 }
-
 
 //histoire 12
 LyngkTestCase.prototype.testHist12 = function(){
@@ -111,7 +109,6 @@ LyngkTestCase.prototype.testHist12 = function(){
         if(jeu.getTaillePileOnInter(i)=== 43) {
             compteur_taille_inters_juste++;
         }
-
         //BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5
         for (var j = 0; j < 43; j++) {
             if(jeu.getCouleurFromPieceFromInterS(i,j) == Lyngk.Color.IVORY){
