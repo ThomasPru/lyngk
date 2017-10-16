@@ -159,17 +159,23 @@ LyngkTestCase.prototype.testHist13 = function(){
 
 LyngkTestCase.prototype.testHist14 = function(){
     var jeu = new Lyngk.Engine();
-    jeu.Init_plateau_Alea();
+    jeu.Init_plateau_One();
     var cpt_intersection_non_vide=0;
     var cpt_couleurAssocie_intersec_valide=0;
-    for(var j=0;j<jeu.getSizePlat();j++){
+    var Identificateur_pile=0;
+    for(var i=0;i<jeu.getSizePlat();i++){
         if(jeu.getTaillePileOnInter(i)>=1){
-            cpt_valid_taillle_inter++;
+            cpt_intersection_non_vide++;
             if(jeu.getCouleurAssoOfInter[i] == jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i))){
                 cpt_couleurAssocie_intersec_valide++;
+            }
+            for(var u=0;u<jeu.getTaillePileOnInter();u++){
+                if(jeu.IdentitePieceInInter(u,i)!=Piece){
+                    Identificateur_pile=-1;
+                }
             }
         }
     }
 
-    assertTrue(cpt_intersection_non_vide===jeu.getSizePlat() && cpt_couleurAssocie_intersec_valide===jeu.getSizePlat());
+    assertTrue(cpt_intersection_non_vide===jeu.getSizePlat() && cpt_couleurAssocie_intersec_valide===jeu.getSizePlat() && Identificateur_pile==0);
 }

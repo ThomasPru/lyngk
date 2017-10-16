@@ -7,6 +7,7 @@ Lyngk.Engine = function () {
 
     var plateau=[];
 
+
     this.Init_plateau_One = function() {
         var array_val_possib =['C1',
             'E2','D2','C2','B2',
@@ -69,7 +70,6 @@ Lyngk.Engine = function () {
     this.getTaillePileOnInter = function(i){
         return plateau[i].getTaillePile();
     }
-    
 
     this.getSizePlat = function(){
         return plateau.length;

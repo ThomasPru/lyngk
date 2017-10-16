@@ -25,7 +25,6 @@ Lyngk.Intersection = function (c) {
         return pile.length;
     }
 
-
     this.poserPiece = function(couleur){
         piece = new Lyngk.Piece(couleur);
         pile.push(piece);
