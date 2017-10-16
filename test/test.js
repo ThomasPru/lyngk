@@ -143,3 +143,16 @@ LyngkTestCase.prototype.testHist12 = function(){
     }
     assertTrue(compteur_taille_inters_juste === 43 && validNbPieceColo===43);
 }
+
+
+LyngkTestCase.prototype.testHist13 = function(){
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_One();
+    var cpt_valid_taillle_inter=0;
+    for(var i=0;i<jeu.getSizePlat();i++){
+        if(jeu.getTaillePileOnInter(i)==1){
+            cpt_valid_taillle_inter++;
+        }
+    }
+    assertEquals(cpt_valid_taillle_inter ,jeu.getSizePlat());
+}

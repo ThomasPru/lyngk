@@ -69,6 +69,7 @@ Lyngk.Engine = function () {
     this.getTaillePileOnInter = function(i){
         return plateau[i].getTaillePile();
     }
+    
 
     this.getSizePlat = function(){
         return plateau.length;
