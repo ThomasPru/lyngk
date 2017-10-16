@@ -156,3 +156,20 @@ LyngkTestCase.prototype.testHist13 = function(){
     }
     assertEquals(cpt_valid_taillle_inter ,jeu.getSizePlat());
 }
+
+LyngkTestCase.prototype.testHist14 = function(){
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_Alea();
+    var cpt_intersection_non_vide=0;
+    var cpt_couleurAssocie_intersec_valide=0;
+    for(var j=0;j<jeu.getSizePlat();j++){
+        if(jeu.getTaillePileOnInter(i)>=1){
+            cpt_valid_taillle_inter++;
+            if(jeu.getCouleurAssoOfInter[i] == jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i))){
+                cpt_couleurAssocie_intersec_valide++;
+            }
+        }
+    }
+
+    assertTrue(cpt_intersection_non_vide===jeu.getSizePlat() && cpt_couleurAssocie_intersec_valide===jeu.getSizePlat());
+}
