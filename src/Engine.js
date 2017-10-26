@@ -5,7 +5,6 @@ Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Lyngk.Engine = function () {
     var plateau=[];
-    //var array_val_possib= [[3,3],[2,5],[1,7],[2,7],[2,8],[3,8],[3,9],[5,8],[7,7]];
     var array_val_possib= ["A3",
         "B2","B3","B4","B5",
         "C1","C2","C3","C4","C5","C6","C7",
@@ -62,9 +61,17 @@ Lyngk.Engine = function () {
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
 
-        dest.poserPiece(source.getCouleurAssociee());
+        var pile_tempo=[];
+        for(var x=0;x<source.getTaillePile();x++){
+            pile_tempo.poserPiece(source.getCouleurAssociee());
+            source.retirerPiece();
+        }
+        for(var y=0;y<pile_tempo.getTaillePile();y++){
+            dest.poserPiece(pile_tempo.getCouleurAssociee());
+            pile_tempo.retirerPiece();
+        }
 
-        source.retirerPiece();
+
     };
 
 
@@ -72,8 +79,6 @@ Lyngk.Engine = function () {
         var inters = this.getCoordonCase(co);
         return inters.getState();
     };
-
-
 
 
     this.getCouleurAssoOfInter=function(i){
