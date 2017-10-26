@@ -5,6 +5,6 @@ Lyngk.Piece = function (c) {
 
     this.getCouleur = function(){
         return couleur;
-    }
+    };
 
 };

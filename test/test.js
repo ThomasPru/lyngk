@@ -161,7 +161,10 @@ LyngkTestCase.prototype.testHist14 = function(){
 LyngkTestCase.prototype.testHist15 = function() {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.DeplacerVers('A3','B3');
+    var colorSourceAvantDep=jeu.getCoordonCase("A3").getCouleurAssociee();
+    jeu.DeplacerVers("A3","B3");
     //verifier que A3 soit vide (vacant)  && B3 couleur assosier = piece qui etait sur A3)
-    assertTrue(jeu.getPlateauEtatCase('A3')===Lyngk.State.VACANT && jeu.getCouleurAssoOfInter('B3') === jeu.getCouleurFromTopPieceFromInter('B3'));
+   console.log(jeu.getPlateauEtatCase("A3"));
+
+    assertTrue(jeu.getPlateauEtatCase("A3")===Lyngk.State.VACANT && jeu.getCoordonCase("B3").getCouleurAssociee() === colorSourceAvantDep);
 };

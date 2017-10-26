@@ -4,7 +4,6 @@ Lyngk.Coordinates = function (co, li) {
     var c = co;
     var l = li;
 
-
     this.valid = function () {
         var array = ['C1',
             'E2','D2','C2','B2',
@@ -15,27 +14,26 @@ Lyngk.Coordinates = function (co, li) {
             'I7','H7','G7','F7','E7','D7','C7',
             'H8','G8','F8','E8',
             'G9'];
-        if(array.indexOf(c+l)===-1){
-            return false;
-        }
-        return  true;
-    }
+
+        return array.indexOf(c + l) !== -1;
+
+    };
 
     this.toString = function(){
+
         if(!this.valid()){
             return "invalid";
         }
         return c+l;
-    }
+    };
 
     this.clone = function(){
         return new Lyngk.Coordinates(c,l);
-    }
+    };
 
     this.hash = function(){
-        var hashValue = (c.charCodeAt(c)-64)*10+l;
-        return hashValue;
-    }
+        return (c.charCodeAt(c) - 64) * 10 + l;
+    };
 };
 
 

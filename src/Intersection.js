@@ -2,10 +2,15 @@
 
 Lyngk.State = {VACANT: 0, ONE_PIECE: 1, STACK: 2, FULL_STACK: 3};
 
-Lyngk.Intersection = function () {
+Lyngk.Intersection = function (x,y) {
     var state= Lyngk.State.VACANT;
     var couleurAssociee;
     var pile=[];
+    var coor=new Lyngk.Coordinates(x, y);
+
+    this.getCoord = function(){
+        return coor;
+    };
 
     this.getState = function () {
         return state;
@@ -42,4 +47,26 @@ Lyngk.Intersection = function () {
         }
 
     };
+
+    this.retirerPiece = function(){
+        if(this.getTaillePile()>=1) {
+            pile.pop();
+            if(pile.length===1){
+                state = Lyngk.State.ONE_PIECE;
+            }
+            else {
+                if (pile.length > 1 && pile.length < 5) {
+                    state = Lyngk.State.STACK;
+                }
+                else {
+                    if (pile.length >= 5) {
+                        state = Lyngk.State.FULL_STACK;
+                    }
+                    else {
+                        state = Lyngk.State.VACANT;
+                    }
+                }
+            }
+        }
+    }
 };
