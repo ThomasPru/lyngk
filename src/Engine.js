@@ -61,30 +61,27 @@ Lyngk.Engine = function () {
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
 
-        var pile_tempo=[];
-        for(var x=0;x<source.getTaillePile();x++){
-            pile_tempo.poserPiece(source.getCouleurAssociee());
+        var pile_tempoA = new Lyngk.Intersection(0, 0);
+
+        while(source.getTaillePile()>0){
+            pile_tempoA.poserPiece(source.getCouleurAssociee());
             source.retirerPiece();
         }
-        for(var y=0;y<pile_tempo.getTaillePile();y++){
-            dest.poserPiece(pile_tempo.getCouleurAssociee());
-            pile_tempo.retirerPiece();
+
+        while(pile_tempoA.getTaillePile()>0){
+            dest.poserPiece(pile_tempoA.getCouleurAssociee());
+            pile_tempoA.retirerPiece();
         }
-
-
     };
-
 
     this.getPlateauEtatCase= function(co){
         var inters = this.getCoordonCase(co);
         return inters.getState();
     };
 
-
     this.getCouleurAssoOfInter=function(i){
         return plateau[i].getCouleurAssociee();
     };
-
 
     this.getCouleurFromPieceFromInterS=function(i,j){
         return plateau[i].getCouleurPieceFromPile(j);

@@ -51,22 +51,19 @@ Lyngk.Intersection = function (x,y) {
     this.retirerPiece = function(){
         if(this.getTaillePile()>=1) {
             pile.pop();
-            if(pile.length===1){
+            if(this.getTaillePile()===0){
+                state = Lyngk.State.VACANT;
+            }
+            else if (this.getTaillePile() === 1) {
                 state = Lyngk.State.ONE_PIECE;
             }
-            else {
-                if (pile.length > 1 && pile.length < 5) {
-                    state = Lyngk.State.STACK;
-                }
-                else {
-                    if (pile.length >= 5) {
-                        state = Lyngk.State.FULL_STACK;
-                    }
-                    else {
-                        state = Lyngk.State.VACANT;
-                    }
-                }
+            else if (this.getTaillePile() > 1 && this.getTaillePile() < 5) {
+                state = Lyngk.State.STACK;
             }
+            else if (this.getTaillePile() >= 5) {
+                state = Lyngk.State.FULL_STACK;
+            }
+
         }
     }
 };
