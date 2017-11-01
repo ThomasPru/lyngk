@@ -76,19 +76,22 @@ Lyngk.Engine = function () {
 
     function check_deplacement(source,dest){
         var check=false;
-        if(source.getHashedCoor()===dest.getHashedCoor()+1 || source.getHashedCoor()===dest.getHashedCoor()-1){
-            check=true;
-        }
-        if(source.getHashedCoor()===dest.getHashedCoor()+10 || source.getHashedCoor()===dest.getHashedCoor()-10){
-            check=true;
-        }
-
-        if(source.getHashedCoor()===dest.getHashedCoor()-11 || source.getHashedCoor()===dest.getHashedCoor()+11){
-            check=true;
+        for(var x=1;x<10;x++){
+            if((source.getHashedCoor()===dest.getHashedCoor()+x || source.getHashedCoor()===dest.getHashedCoor()-x)
+                && source.getX()===dest.getX()){
+                check=true;
+            }
+            if((source.getHashedCoor()===dest.getHashedCoor()+10*x || source.getHashedCoor()===dest.getHashedCoor()-10*x)
+                && (source.getY()===dest.getY() )){
+                check=true;
+            }
+            if(source.getHashedCoor()===dest.getHashedCoor()-11*x || source.getHashedCoor()===dest.getHashedCoor()+11*x){
+                check=true;
+            }
         }
         return check;
     }
-    
+
     this.getPlateauEtatCase= function(co){
         var inters = this.getCoordonCase(co);
         return inters.getState();

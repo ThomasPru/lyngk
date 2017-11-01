@@ -151,8 +151,6 @@ LyngkTestCase.prototype.testHist14 = function(){
             if(jeu.getCouleurAssoOfInter(i) === jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i))){
                 cpt_couleurAssocie_intersec_valide++;
             }
-
-
         }
     }
     assertTrue(cpt_intersection_non_vide===jeu.getSizePlat() && cpt_couleurAssocie_intersec_valide===jeu.getSizePlat() && Identificateur_pile===0);
@@ -194,3 +192,4 @@ LyngkTestCase.prototype.testHist18 = function () {
     jeu.DeplacerVers("B3","C2");
     assertTrue(jeu.getPlateauEtatCase("B3") !== Lyngk.State.VACANT && couleurB3===jeu.getCoordonCase("B3").getCouleurAssociee());
 };
+
