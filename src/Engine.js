@@ -22,7 +22,6 @@ Lyngk.Engine = function () {
             for (var y = 0; y < 10; y++) {
                 if (array_val_possib.indexOf(lettre[x] + y) !== -1) {
                     var inter = new Lyngk.Intersection(x, y);
-
                     inter.poserPiece(Lyngk.Color.BLUE);
                     plateau.push(inter);
                 }
@@ -60,17 +59,17 @@ Lyngk.Engine = function () {
     this.DeplacerVers=function(origin,destination){
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
-        if(dest.getTaillePile()>0) {
-            var pile_tempoA = new Lyngk.Intersection(0, 0);
-
-            while (source.getTaillePile() > 0) {
-                pile_tempoA.poserPiece(source.getCouleurAssociee());
-                source.retirerPiece();
-            }
-
-            while (pile_tempoA.getTaillePile() > 0) {
-                dest.poserPiece(pile_tempoA.getCouleurAssociee());
-                pile_tempoA.retirerPiece();
+        if((source.getX()===dest.getX()) || (source.getY()===dest.getY())) {
+            if (dest.getTaillePile() > 0) {
+                var pile_tempoA = new Lyngk.Intersection(0, 0);
+                while (source.getTaillePile() > 0) {
+                    pile_tempoA.poserPiece(source.getCouleurAssociee());
+                    source.retirerPiece();
+                }
+                while (pile_tempoA.getTaillePile() > 0) {
+                    dest.poserPiece(pile_tempoA.getCouleurAssociee());
+                    pile_tempoA.retirerPiece();
+                }
             }
         }
     };

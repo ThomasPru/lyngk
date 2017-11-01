@@ -8,6 +8,15 @@ Lyngk.Intersection = function (x,y) {
     var pile=[];
     var coor=new Lyngk.Coordinates(x, y);
 
+    this.getX=function(){
+        return coor.getX();
+    };
+
+    this.getY=function(){
+        return coor.getY();
+    };
+
+
     this.getCoord = function(){
         return coor;
     };

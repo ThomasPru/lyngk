@@ -4,6 +4,14 @@ Lyngk.Coordinates = function (co, li) {
     var c = co;
     var l = li;
 
+    this.getX=function(){
+        return c;
+    };
+
+    this.getY=function(){
+        return l;
+    };
+
     this.valid = function () {
         var array = ['C1',
             'E2','D2','C2','B2',
