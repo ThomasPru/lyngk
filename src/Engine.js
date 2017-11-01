@@ -59,7 +59,7 @@ Lyngk.Engine = function () {
     this.DeplacerVers=function(origin,destination){
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
-        if((source.getX()===dest.getX()) || (source.getY()===dest.getY())) {
+        if(check_deplacement(source,dest)===true) {
             if (dest.getTaillePile() > 0) {
                 var pile_tempoA = new Lyngk.Intersection(0, 0);
                 while (source.getTaillePile() > 0) {
@@ -74,7 +74,21 @@ Lyngk.Engine = function () {
         }
     };
 
+    function check_deplacement(source,dest){
+        var check=false;
+        if(source.getHashedCoor()===dest.getHashedCoor()+1 || source.getHashedCoor()===dest.getHashedCoor()-1){
+            check=true;
+        }
+        if(source.getHashedCoor()===dest.getHashedCoor()+10 || source.getHashedCoor()===dest.getHashedCoor()-10){
+            check=true;
+        }
 
+        if(source.getHashedCoor()===dest.getHashedCoor()-11 || source.getHashedCoor()===dest.getHashedCoor()+11){
+            check=true;
+        }
+        return check;
+    }
+    
     this.getPlateauEtatCase= function(co){
         var inters = this.getCoordonCase(co);
         return inters.getState();

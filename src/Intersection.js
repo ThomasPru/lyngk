@@ -16,6 +16,9 @@ Lyngk.Intersection = function (x,y) {
         return coor.getY();
     };
 
+    this.getHashedCoor=function(){
+        return coor.hash();
+    };
 
     this.getCoord = function(){
         return coor;
@@ -41,15 +44,15 @@ Lyngk.Intersection = function (x,y) {
         var piece = new Lyngk.Piece(couleur);
         pile.push(piece);
         couleurAssociee = piece.getCouleur();
-        if(pile.length===1){
+        if(this.getTaillePile()===1){
             state = Lyngk.State.ONE_PIECE;
         }
         else{
-            if(pile.length>1 && pile.length<5) {
+            if(this.getTaillePile()>1 && this.getTaillePile()<5) {
                 state = Lyngk.State.STACK;
             }
             else{
-                if(pile.length>=5){
+                if(this.getTaillePile()>=5){
                     state = Lyngk.State.FULL_STACK;
                 }
             }
