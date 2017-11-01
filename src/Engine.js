@@ -75,21 +75,20 @@ Lyngk.Engine = function () {
     };
 
     function check_deplacement(source,dest){
-        var check=false;
         for(var x=1;x<10;x++){
             if((source.getHashedCoor()===dest.getHashedCoor()+x || source.getHashedCoor()===dest.getHashedCoor()-x)
                 && source.getX()===dest.getX()){
-                check=true;
+                return true;
             }
             if((source.getHashedCoor()===dest.getHashedCoor()+10*x || source.getHashedCoor()===dest.getHashedCoor()-10*x)
                 && (source.getY()===dest.getY() )){
-                check=true;
+                return true;
             }
             if(source.getHashedCoor()===dest.getHashedCoor()-11*x || source.getHashedCoor()===dest.getHashedCoor()+11*x){
-                check=true;
+                return true;
             }
         }
-        return check;
+        return false;
     }
 
     this.getPlateauEtatCase= function(co){
