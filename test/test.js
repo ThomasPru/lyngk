@@ -81,7 +81,7 @@ LyngkTestCase.prototype.testHist11 = function () {
     var compteur_one_piece=0;
 
     for(var i=0;i<jeu.getSizePlat();i++){
-        if(jeu.getPlateauETATindice(i)=== Lyngk.State.ONE_PIECE) {
+        if(jeu.getPlateauEtatCase(i)=== Lyngk.State.ONE_PIECE) {
             compteur_one_piece++;
         }
     }
@@ -216,11 +216,11 @@ LyngkTestCase.prototype.testHist20 = function () {
     jeu.DeplacerVers("C2","D2");
 
     var couleurSav=jeu.getCoordonCase("D2").getCouleurAssociee();
-    var taillePileD2=jeu.getTaillePileOnInterCO("D2");
+    var taillePileD2=jeu.getTaillePileOnInter("D2");
 
     jeu.DeplacerVers("D2","E2");
 
-    assertTrue(jeu.getPlateauEtatCase("D2") !==Lyngk.State.VACANT && jeu.getTaillePileOnInterCO("D2")===taillePileD2
+    assertTrue(jeu.getPlateauEtatCase("D2") !==Lyngk.State.VACANT && jeu.getTaillePileOnInter("D2")===taillePileD2
         && couleurSav===jeu.getCoordonCase("D2").getCouleurAssociee());
 };
 

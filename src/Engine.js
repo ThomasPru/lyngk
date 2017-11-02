@@ -79,32 +79,38 @@ Lyngk.Engine = function () {
 
 
     this.getPlateauEtatCase= function(co){
+        if(typeof co === 'number'){
+            return plateau[co].getState();
+        }
         var inters = this.getCoordonCase(co);
         return inters.getState();
     };
 
-    this.getPlateauETATindice = function(indice){
-        return plateau[indice].getState();
-    };
-
-
-    this.getTaillePileOnInterCO = function(co){
+    this.getTaillePileOnInter = function(co){
+        if(typeof co === 'number'){
+            return plateau[co].getTaillePile();
+        }
         var inters = this.getCoordonCase(co);
         return inters.getTaillePile();
-    };
 
-    this.getTaillePileOnInter = function(i){
-        return plateau[i].getTaillePile();
     };
-
 
 
     this.getCouleurAssoOfInter=function(i){
-        return plateau[i].getCouleurAssociee();
+        if(typeof i === 'number'){
+            return plateau[i].getCouleurAssociee();
+        }
+        var inters = this.getCoordonCase(i);
+        return inters.getCouleurAssociee();
     };
 
+
     this.getCouleurFromPieceFromInterS=function(i,j){
-        return plateau[i].getCouleurPieceFromPile(j);
+        if(typeof i === 'number'){
+            return plateau[i].getCouleurPieceFromPile(j);
+        }
+        var inters = this.getCoordonCase(i);
+        return inters.getCouleurPieceFromPile(j);
     };
 
 
@@ -130,12 +136,12 @@ Lyngk.Engine = function () {
     };
 
     this.comparePile=function(source,dest){
-        return this.getTaillePileOnInterCO(source.getX() + source.getY()) >= this.getTaillePileOnInterCO(dest.getX() + dest.getY());
+        return this.getTaillePileOnInter(source.getX() + source.getY()) >= this.getTaillePileOnInter(dest.getX() + dest.getY());
 
     };
 
     this.getSizePileSom=function(source,dest){
-        return this.getTaillePileOnInterCO(source.getX()+source.getY())+this.getTaillePileOnInterCO(dest.getX()+dest.getY());
+        return this.getTaillePileOnInter(source.getX()+source.getY())+this.getTaillePileOnInter(dest.getX()+dest.getY());
     };
 
     this.checkSourceToDest=function(source,dest) {
@@ -144,7 +150,7 @@ Lyngk.Engine = function () {
                 for (var x = source.getY() + 1; x < dest.getY(); x++) {
                     var tempo_int = source.getX() + x;
                     tempo_int = tempo_int.toString();
-                    if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                    if (this.getTaillePileOnInter(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
                         return false;
                     }
                 }
@@ -153,7 +159,7 @@ Lyngk.Engine = function () {
                 for (var x = source.getY() - 1; x > dest.getY(); x--) {
                     var tempo_int = source.getX() + x;
                     tempo_int = tempo_int.toString();
-                    if (this.getTaillePileOnInterCO(tempo_int).getTaillePile() > 0) {
+                    if (this.getTaillePileOnInter(tempo_int).getTaillePile() > 0) {
                         return false;
                     }
                 }
@@ -165,7 +171,7 @@ Lyngk.Engine = function () {
                     for (var x = source.getX().charCodeAt() - 64 + 1; x < dest.getX().charCodeAt() - 64; x++) {
                         var tempo_int = String.fromCharCode(x + 64) + source.getY();
                         tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                        if (this.getTaillePileOnInter(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
                             return false;
                         }
                     }
@@ -174,7 +180,7 @@ Lyngk.Engine = function () {
                     for (var x = source.getX().charCodeAt() - 64 - 1; x > dest.getX().charCodeAt() - 64; x--) {
                         var tempo_int = String.fromCharCode(x + 64) + source.getY();
                         tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                        if (this.getTaillePileOnInter(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
                             return false;
                         }
                     }
@@ -185,7 +191,7 @@ Lyngk.Engine = function () {
                     for (var x = source.getY() + 1; x < dest.getY(); x++) {
                         var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
                         tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                        if (this.getTaillePileOnInter(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
                             return false;
                         }
                     }
@@ -194,7 +200,7 @@ Lyngk.Engine = function () {
                     for (var x = source.getY() - 1; x > dest.getY(); x--) {
                         var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
                         tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                        if (this.getTaillePileOnInter(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
                             return false;
                         }
                     }
