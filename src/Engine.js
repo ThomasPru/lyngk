@@ -59,7 +59,7 @@ Lyngk.Engine = function () {
     this.DeplacerVers=function(origin,destination){
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
-        if(check_deplacement(source,dest)===true) {
+        if(this.check_deplacement(source,dest)===true) {
             if (dest.getTaillePile() > 0) {
                 var pile_tempoA = new Lyngk.Intersection(0, 0);
                 while (source.getTaillePile() > 0) {
@@ -74,17 +74,94 @@ Lyngk.Engine = function () {
         }
     };
 
-    function check_deplacement(source,dest){
-        for(var x=1;x<10;x++){
-            if((source.getHashedCoor()===dest.getHashedCoor()+x || source.getHashedCoor()===dest.getHashedCoor()-x)
-                && source.getX()===dest.getX()){
-                return true;
+    this.check_deplacement=function(source,dest) {
+        var check = false;
+        check = checkLegalLigne(source, dest);
+        //AFFICHER LES CASES DU TAB VALIDES
+        if (check === true) {
+            if (source.getX() === dest.getX()) {
+                if (source.getY() < dest.getY()) {
+                    for (var x = source.getY() + 1; x < dest.getY(); x++) {
+                        var tempo_int = source.getX() + x;
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                            check = false;
+                        }
+                    }
+                }
+                else {
+                    for (var x = source.getY() - 1; x > dest.getY(); x--) {
+                        var tempo_int = source.getX() + x;
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int).getTaillePile() > 0) {
+                            check = false;
+                        }
+                    }
+                }
             }
-            if((source.getHashedCoor()===dest.getHashedCoor()+10*x || source.getHashedCoor()===dest.getHashedCoor()-10*x)
-                && (source.getY()===dest.getY() )){
-                return true;
+            else {
+                if (source.getY() === dest.getY()) {
+                    if (source.getX() < dest.getX()) {
+                        for (var x = source.getX().charCodeAt() - 64 + 1; x < dest.getX().charCodeAt() - 64; x++) {
+                            var tempo_int = String.fromCharCode(x + 64) + source.getY();
+                            tempo_int = tempo_int.toString();
+                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                                check = false;
+                            }
+                        }
+                    }
+                    else {
+                        for (var x = source.getX().charCodeAt() - 64 - 1; x > dest.getX().charCodeAt() - 64; x--) {
+                            var tempo_int = String.fromCharCode(x + 64) + source.getY();
+                            tempo_int = tempo_int.toString();
+                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                                check = false;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if ((source.getX().charCodeAt() - 64) * 10 + source.getY() < (dest.getX().charCodeAt() - 64) * 10 + dest.getY()) {
+                        for (var x = source.getY() + 1; x < dest.getY(); x++) {
+                            var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
+                            tempo_int = tempo_int.toString();
+                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                                check = false;
+                            }
+                        }
+                    }
+                    else {
+                        for (var x = source.getY() - 1; x > dest.getY(); x--) {
+                            var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
+                            tempo_int = tempo_int.toString();
+                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                                check = false;
+                            }
+                        }
+                    }
+                }
             }
-            if(source.getHashedCoor()===dest.getHashedCoor()-11*x || source.getHashedCoor()===dest.getHashedCoor()+11*x){
+            return check;
+        }
+    };
+
+    function checkLegalLigne(source,dest){
+        if (source.getX() === dest.getX()) {
+            for (var x = source.getY() - 9; x < 9; x++) {
+                if (source.getHashedCoor() === dest.getHashedCoor() + x && x!==0) {
+                    return true;
+                }
+            }
+        }
+        if (source.getY() === dest.getY()) {
+            for (var x = source.getY() - 9; x < 9; x++) {
+                if (source.getHashedCoor() === dest.getHashedCoor() + 10*x && x!==0) {
+                    return true;
+                }
+            }
+        }
+        for (var x = source.getY() - 9; x < 9; x++) {
+            if (source.getHashedCoor() === dest.getHashedCoor() + 11*x && x!==0) {
                 return true;
             }
         }
@@ -96,6 +173,22 @@ Lyngk.Engine = function () {
         return inters.getState();
     };
 
+    this.getPlateauETATindice = function(indice){
+        return plateau[indice].getState();
+    };
+
+    this.getTaillePileOnInterCO = function(co){
+        var inters = this.getCoordonCase(co);
+        return inters.getTaillePile();
+    };
+
+    this.getTaillePileOnInter = function(i){
+        return plateau[i].getTaillePile();
+    };
+
+
+
+
     this.getCouleurAssoOfInter=function(i){
         return plateau[i].getCouleurAssociee();
     };
@@ -104,17 +197,14 @@ Lyngk.Engine = function () {
         return plateau[i].getCouleurPieceFromPile(j);
     };
 
-    this.getTaillePileOnInter = function(i){
-        return plateau[i].getTaillePile();
-    };
+
 
     this.getSizePlat = function(){
         return plateau.length;
     };
 
-    this.getPlateauETATindice = function(indice){
-        return plateau[indice].getState();
-    };
+
+
 };
 
 

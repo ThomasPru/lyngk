@@ -54,7 +54,6 @@ LyngkTestCase.prototype.testHist8 = function(){
     var inter = new Lyngk.Intersection('B',2);
     inter.poserPiece(Lyngk.Color.BLUE);
     assertTrue(inter.getState() === Lyngk.State.ONE_PIECE && inter.getCouleurAssociee()===Lyngk.Color.BLUE );
-
 };
 
 
@@ -86,7 +85,6 @@ LyngkTestCase.prototype.testHist11 = function () {
             compteur_one_piece++;
         }
     }
-
     assertEquals(compteur_one_piece,43);
 };
 
@@ -178,9 +176,7 @@ LyngkTestCase.prototype.testHist17 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("B2","B3");
-
     var couleurB3=jeu.getCoordonCase("B3").getCouleurAssociee();
-
     jeu.DeplacerVers("B3","B2");
     assertTrue(jeu.getPlateauEtatCase("B3") !== Lyngk.State.VACANT && couleurB3===jeu.getCoordonCase("B3").getCouleurAssociee());
 };
@@ -197,9 +193,14 @@ LyngkTestCase.prototype.testHist18 = function () {
 LyngkTestCase.prototype.testHist19 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
+
     jeu.DeplacerVers("I7","H6");
     jeu.DeplacerVers("H6","H5");
+
     var couleurH5=jeu.getCoordonCase("H5").getCouleurAssociee();
+
     jeu.DeplacerVers("H5","H8");
+    jeu.DeplacerVers("H5","F5");
+    jeu.DeplacerVers("H5","F3");
     assertTrue(jeu.getPlateauEtatCase("H5") !==Lyngk.State.VACANT && couleurH5===jeu.getCoordonCase("H5").getCouleurAssociee());
 };
