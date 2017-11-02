@@ -204,3 +204,21 @@ LyngkTestCase.prototype.testHist19 = function () {
     jeu.DeplacerVers("H5","F3");
     assertTrue(jeu.getPlateauEtatCase("H5") !==Lyngk.State.VACANT && couleurH5===jeu.getCoordonCase("H5").getCouleurAssociee());
 };
+
+
+LyngkTestCase.prototype.testHist20 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    jeu.DeplacerVers("A3","B3");
+    jeu.DeplacerVers("B3","B2");
+    jeu.DeplacerVers("B2","C2");
+    jeu.DeplacerVers("C2","D2");
+
+    var couleurSav=jeu.getCoordonCase("D2").getCouleurAssociee();
+    var taillePileD2=jeu.getTaillePileOnInterCO("D2");
+
+    jeu.DeplacerVers("D2","E2");
+    assertTrue(jeu.getPlateauEtatCase("D2") !==Lyngk.State.VACANT && jeu.getTaillePileOnInterCO("D2")===taillePileD2
+        && couleurSav===jeu.getCoordonCase("D2").getCouleurAssociee());
+};
