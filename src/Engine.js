@@ -130,7 +130,7 @@ Lyngk.Engine = function () {
     };
 
     this.comparePile=function(source,dest){
-        return !(this.getTaillePileOnInterCO(source.getX() + source.getY()) === 1 && this.getTaillePileOnInterCO(dest.getX() + dest.getY()) > 1);
+        return this.getTaillePileOnInterCO(source.getX() + source.getY()) >= this.getTaillePileOnInterCO(dest.getX() + dest.getY());
 
     };
 
