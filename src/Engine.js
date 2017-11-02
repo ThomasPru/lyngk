@@ -74,6 +74,65 @@ Lyngk.Engine = function () {
         }
     };
 
+
+    this.getPlateauEtatCase= function(co){
+        var inters = this.getCoordonCase(co);
+        return inters.getState();
+    };
+
+    this.getPlateauETATindice = function(indice){
+        return plateau[indice].getState();
+    };
+
+
+    this.getTaillePileOnInterCO = function(co){
+        var inters = this.getCoordonCase(co);
+        return inters.getTaillePile();
+    };
+
+    this.getTaillePileOnInter = function(i){
+        return plateau[i].getTaillePile();
+    };
+
+
+
+    this.getCouleurAssoOfInter=function(i){
+        return plateau[i].getCouleurAssociee();
+    };
+
+    this.getCouleurFromPieceFromInterS=function(i,j){
+        return plateau[i].getCouleurPieceFromPile(j);
+    };
+
+
+    this.getSizePlat = function(){
+        return plateau.length;
+    };
+
+    function checkLegalLigne(source,dest){
+        if (source.getX() === dest.getX()) {
+            for (var x = source.getY() - 9; x < 9; x++) {
+                if (source.getHashedCoor() === dest.getHashedCoor() + x && x!==0) {
+                    return true;
+                }
+            }
+        }
+        if (source.getY() === dest.getY()) {
+            for (var x = source.getY() - 9; x < 9; x++) {
+                if (source.getHashedCoor() === dest.getHashedCoor() + 10*x && x!==0) {
+                    return true;
+                }
+            }
+        }
+        for (var x = source.getY() - 9; x < 9; x++) {
+            if (source.getHashedCoor() === dest.getHashedCoor() + 11*x && x!==0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     this.check_deplacement=function(source,dest) {
         var check = false;
         check = checkLegalLigne(source, dest);
@@ -141,69 +200,12 @@ Lyngk.Engine = function () {
                     }
                 }
             }
+            if(this.getTaillePileOnInterCO(source.getX()+source.getY())+this.getTaillePileOnInterCO(dest.getX()+dest.getY())>5){
+                check=false;
+            }
             return check;
         }
     };
-
-    function checkLegalLigne(source,dest){
-        if (source.getX() === dest.getX()) {
-            for (var x = source.getY() - 9; x < 9; x++) {
-                if (source.getHashedCoor() === dest.getHashedCoor() + x && x!==0) {
-                    return true;
-                }
-            }
-        }
-        if (source.getY() === dest.getY()) {
-            for (var x = source.getY() - 9; x < 9; x++) {
-                if (source.getHashedCoor() === dest.getHashedCoor() + 10*x && x!==0) {
-                    return true;
-                }
-            }
-        }
-        for (var x = source.getY() - 9; x < 9; x++) {
-            if (source.getHashedCoor() === dest.getHashedCoor() + 11*x && x!==0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    this.getPlateauEtatCase= function(co){
-        var inters = this.getCoordonCase(co);
-        return inters.getState();
-    };
-
-    this.getPlateauETATindice = function(indice){
-        return plateau[indice].getState();
-    };
-
-    this.getTaillePileOnInterCO = function(co){
-        var inters = this.getCoordonCase(co);
-        return inters.getTaillePile();
-    };
-
-    this.getTaillePileOnInter = function(i){
-        return plateau[i].getTaillePile();
-    };
-
-
-
-
-    this.getCouleurAssoOfInter=function(i){
-        return plateau[i].getCouleurAssociee();
-    };
-
-    this.getCouleurFromPieceFromInterS=function(i,j){
-        return plateau[i].getCouleurPieceFromPile(j);
-    };
-
-
-
-    this.getSizePlat = function(){
-        return plateau.length;
-    };
-
-
 
 };
 

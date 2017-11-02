@@ -219,6 +219,7 @@ LyngkTestCase.prototype.testHist20 = function () {
     var taillePileD2=jeu.getTaillePileOnInterCO("D2");
 
     jeu.DeplacerVers("D2","E2");
+    
     assertTrue(jeu.getPlateauEtatCase("D2") !==Lyngk.State.VACANT && jeu.getTaillePileOnInterCO("D2")===taillePileD2
         && couleurSav===jeu.getCoordonCase("D2").getCouleurAssociee());
 };
