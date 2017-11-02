@@ -3,6 +3,9 @@
 // enums definition
 Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
+/**
+ * @return {boolean}
+ */
 Lyngk.Engine = function () {
     var plateau=[];
     var array_val_possib= ["A3",
@@ -109,6 +112,98 @@ Lyngk.Engine = function () {
         return plateau.length;
     };
 
+
+    this.check_deplacement=function(source,dest) {
+        var check;
+        check = checkLegalLigne(source, dest);
+        //AFFICHER LES CASES DU TAB VALIDES
+        if (check === true) {
+            check=this.checkSourceToDest(source,dest);
+            if(this.getSizePileSom(source,dest)>5){
+                check=false;
+            }
+            if(check===true){
+                check=this.comparePile(source,dest);
+            }
+        }
+        return check;
+    };
+
+    this.comparePile=function(source,dest){
+        return !(this.getTaillePileOnInterCO(source.getX() + source.getY()) === 1 && this.getTaillePileOnInterCO(dest.getX() + dest.getY()) > 1);
+
+    };
+
+    this.getSizePileSom=function(source,dest){
+        return this.getTaillePileOnInterCO(source.getX()+source.getY())+this.getTaillePileOnInterCO(dest.getX()+dest.getY());
+    };
+
+    this.checkSourceToDest=function(source,dest) {
+        if (source.getX() === dest.getX()) {
+            if (source.getY() < dest.getY()) {
+                for (var x = source.getY() + 1; x < dest.getY(); x++) {
+                    var tempo_int = source.getX() + x;
+                    tempo_int = tempo_int.toString();
+                    if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                        return false;
+                    }
+                }
+            }
+            else {
+                for (var x = source.getY() - 1; x > dest.getY(); x--) {
+                    var tempo_int = source.getX() + x;
+                    tempo_int = tempo_int.toString();
+                    if (this.getTaillePileOnInterCO(tempo_int).getTaillePile() > 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+        else {
+            if (source.getY() === dest.getY()) {
+                if (source.getX() < dest.getX()) {
+                    for (var x = source.getX().charCodeAt() - 64 + 1; x < dest.getX().charCodeAt() - 64; x++) {
+                        var tempo_int = String.fromCharCode(x + 64) + source.getY();
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    for (var x = source.getX().charCodeAt() - 64 - 1; x > dest.getX().charCodeAt() - 64; x--) {
+                        var tempo_int = String.fromCharCode(x + 64) + source.getY();
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                            return false;
+                        }
+                    }
+                }
+            }
+            else {
+                if ((source.getX().charCodeAt() - 64) * 10 + source.getY() < (dest.getX().charCodeAt() - 64) * 10 + dest.getY()) {
+                    for (var x = source.getY() + 1; x < dest.getY(); x++) {
+                        var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                            return false;
+                        }
+                    }
+                }
+                else {
+                    for (var x = source.getY() - 1; x > dest.getY(); x--) {
+                        var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
+                        tempo_int = tempo_int.toString();
+                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    };
+
     function checkLegalLigne(source,dest){
         if (source.getX() === dest.getX()) {
             for (var x = source.getY() - 9; x < 9; x++) {
@@ -131,81 +226,6 @@ Lyngk.Engine = function () {
         }
         return false;
     }
-
-
-    this.check_deplacement=function(source,dest) {
-        var check = false;
-        check = checkLegalLigne(source, dest);
-        //AFFICHER LES CASES DU TAB VALIDES
-        if (check === true) {
-            if (source.getX() === dest.getX()) {
-                if (source.getY() < dest.getY()) {
-                    for (var x = source.getY() + 1; x < dest.getY(); x++) {
-                        var tempo_int = source.getX() + x;
-                        tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
-                            check = false;
-                        }
-                    }
-                }
-                else {
-                    for (var x = source.getY() - 1; x > dest.getY(); x--) {
-                        var tempo_int = source.getX() + x;
-                        tempo_int = tempo_int.toString();
-                        if (this.getTaillePileOnInterCO(tempo_int).getTaillePile() > 0) {
-                            check = false;
-                        }
-                    }
-                }
-            }
-            else {
-                if (source.getY() === dest.getY()) {
-                    if (source.getX() < dest.getX()) {
-                        for (var x = source.getX().charCodeAt() - 64 + 1; x < dest.getX().charCodeAt() - 64; x++) {
-                            var tempo_int = String.fromCharCode(x + 64) + source.getY();
-                            tempo_int = tempo_int.toString();
-                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
-                                check = false;
-                            }
-                        }
-                    }
-                    else {
-                        for (var x = source.getX().charCodeAt() - 64 - 1; x > dest.getX().charCodeAt() - 64; x--) {
-                            var tempo_int = String.fromCharCode(x + 64) + source.getY();
-                            tempo_int = tempo_int.toString();
-                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
-                                check = false;
-                            }
-                        }
-                    }
-                }
-                else {
-                    if ((source.getX().charCodeAt() - 64) * 10 + source.getY() < (dest.getX().charCodeAt() - 64) * 10 + dest.getY()) {
-                        for (var x = source.getY() + 1; x < dest.getY(); x++) {
-                            var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
-                            tempo_int = tempo_int.toString();
-                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
-                                check = false;
-                            }
-                        }
-                    }
-                    else {
-                        for (var x = source.getY() - 1; x > dest.getY(); x--) {
-                            var tempo_int = String.fromCharCode(source.getX().charCodeAt() + (x - source.getY())) + x;
-                            tempo_int = tempo_int.toString();
-                            if (this.getTaillePileOnInterCO(tempo_int) > 0) {//taille de la pile des intersections sur la ligne >0
-                                check = false;
-                            }
-                        }
-                    }
-                }
-            }
-            if(this.getTaillePileOnInterCO(source.getX()+source.getY())+this.getTaillePileOnInterCO(dest.getX()+dest.getY())>5){
-                check=false;
-            }
-            return check;
-        }
-    };
 
 };
 
