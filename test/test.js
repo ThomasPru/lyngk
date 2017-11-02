@@ -231,7 +231,22 @@ LyngkTestCase.prototype.testHist21 = function () {
 
     var couleurSav=jeu.getCoordonCase("C3").getCouleurAssociee();
     jeu.DeplacerVers("C3","B3");
-    
+
     assertTrue(jeu.getPlateauEtatCase("C3") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("C3").getCouleurAssociee());
+
+};
+
+LyngkTestCase.prototype.testHist22 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    jeu.DeplacerVers("I7","H6");
+
+    jeu.DeplacerVers("G4","G5");
+    jeu.DeplacerVers("G5","G6");
+
+    var couleurSav=jeu.getCoordonCase("H6").getCouleurAssociee();
+    jeu.DeplacerVers("H6","G6");
+
+    assertTrue(jeu.getPlateauEtatCase("H6") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("H6").getCouleurAssociee());
 
 };
