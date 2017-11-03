@@ -284,3 +284,10 @@ LyngkTestCase.prototype.testHist23 = function () {
     assertTrue((jeu.getPlateauEtatCase("C5") !==Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===true) ||
         (jeu.getPlateauEtatCase("C5") ===Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===false));
 };
+
+LyngkTestCase.prototype.testHist24 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    //joueur 1 = 0    et joueur 2 = 1
+    assertTrue(jeu.getActivePlayer()===0);
+};
