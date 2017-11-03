@@ -212,8 +212,7 @@ LyngkTestCase.prototype.testHist20 = function () {
     jeu.DeplacerVers("E4","E5");
     jeu.DeplacerVers("E5","E6");
     jeu.DeplacerVers("E6","F7");
-
-    var taillePileF7=jeu.getTaillePileOnInter("F7");
+    
     var couleurSav=jeu.getCoordonCase("F7").getCouleurAssociee();
 
     jeu.DeplacerVers("F7","G7");
@@ -291,4 +290,16 @@ LyngkTestCase.prototype.testHist25 = function () {
     jeu.DeplacerVers("E4","E5");
 
     assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerTwo);
+};
+
+LyngkTestCase.prototype.testHist26 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    jeu.claimColor(Lyngk.Color.RED);
+    jeu.DeplacerVers("A3","B3");
+    jeu.claimColor(Lyngk.Color.GREEN);
+
+    assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne) === Lyngk.Color.RED
+        && jeu.getPlayerColor(Lyngk.Players.playerTwo) === Lyngk.Color.GREEN);
 };
