@@ -279,6 +279,16 @@ LyngkTestCase.prototype.testHist23 = function () {
 LyngkTestCase.prototype.testHist24 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    //joueur 1 = 0    et joueur 2 = 1
     assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerOne);
+};
+
+
+LyngkTestCase.prototype.testHist25 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    //le joueur 1 joue son coup
+    jeu.DeplacerVers("E4","E5");
+
+    assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerTwo);
 };
