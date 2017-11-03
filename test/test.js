@@ -212,7 +212,7 @@ LyngkTestCase.prototype.testHist20 = function () {
     jeu.DeplacerVers("E4","E5");
     jeu.DeplacerVers("E5","E6");
     jeu.DeplacerVers("E6","F7");
-    
+
     var couleurSav=jeu.getCoordonCase("F7").getCouleurAssociee();
 
     jeu.DeplacerVers("F7","G7");

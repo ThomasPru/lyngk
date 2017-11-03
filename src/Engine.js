@@ -10,9 +10,19 @@ Lyngk.Engine = function () {
 
     var activePlayer;
 
+    var claimedColor=[null,null];
+
     this.getActivePlayer=function(){
         return activePlayer;
-    }
+    };
+
+    this.getPlayerColor=function(no){
+        return claimedColor[no];
+    };
+
+    this.claimColor=function(color){
+        claimedColor[this.getActivePlayer()]=color;
+    };
 
     var array_val_possib= ["A3",
         "B2","B3","B4","B5",
