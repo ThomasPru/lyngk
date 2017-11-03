@@ -82,6 +82,12 @@ Lyngk.Engine = function () {
                     pile_tempoA.pop();
                 }
             }
+            if(activePlayer===Lyngk.Players.playerOne){
+                activePlayer=Lyngk.Players.playerTwo;
+            }
+            else{
+                activePlayer=Lyngk.Players.playerOne;
+            }
         }
         return deplacementValide;
     };
