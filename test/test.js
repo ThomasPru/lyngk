@@ -303,3 +303,36 @@ LyngkTestCase.prototype.testHist26 = function () {
     assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne) === Lyngk.Color.RED
         && jeu.getPlayerColor(Lyngk.Players.playerTwo) === Lyngk.Color.GREEN);
 };
+
+LyngkTestCase.prototype.testHist27 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    //joueur1
+    jeu.claimColor(Lyngk.Color.BLUE);
+    jeu.DeplacerVers("E3","E4");
+
+    //joueur2
+    jeu.claimColor(Lyngk.Color.RED);
+    jeu.DeplacerVers("C3","C4");
+
+    //joueur1
+    jeu.DeplacerVers("E4","E5");
+
+    //joueur2
+    jeu.DeplacerVers("C4","C5");
+
+    //joueur1
+    jeu.DeplacerVers("E5","E6");
+
+    //joueur2
+    jeu.DeplacerVers("C5","C6");
+
+    //joueur1, marque un point
+    jeu.DeplacerVers("E6","F7");
+
+    //joueur2
+    jeu.DeplacerVers("C6","C7");
+
+    assertTrue(jeu.getScore(Lyngk.Players.playerOne)===1 && jeu.nbPiecesRes===38);
+};
