@@ -62,19 +62,21 @@ Lyngk.Engine = function () {
     this.DeplacerVers=function(origin,destination){
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
-        if(this.check_deplacement(source,dest)===true) {
+        var deplacementValide=this.check_deplacement(source,dest);
+        if(deplacementValide===true) {
             if (dest.getTaillePile() > 0) {
-                var pile_tempoA = new Lyngk.Intersection(0, 0);
+                var pile_tempoA = [];
                 while (source.getTaillePile() > 0) {
-                    pile_tempoA.poserPiece(source.getCouleurAssociee());
+                    pile_tempoA.push(source.getCouleurAssociee());
                     source.retirerPiece();
                 }
-                while (pile_tempoA.getTaillePile() > 0) {
-                    dest.poserPiece(pile_tempoA.getCouleurAssociee());
-                    pile_tempoA.retirerPiece();
+                while (pile_tempoA.length > 0) {
+                    dest.poserPiece(pile_tempoA[pile_tempoA.length-1]);
+                    pile_tempoA.pop();
                 }
             }
         }
+        return deplacementValide;
     };
 
 
@@ -123,19 +125,46 @@ Lyngk.Engine = function () {
         var check;
         check = checkLegalLigne(source, dest);
         //AFFICHER LES CASES DU TAB VALIDES
-        if (check === true) {
+        if (check) {
             check=this.checkSourceToDest(source,dest);
             if(this.getSizePileSom(source,dest)>5){
+                console.log("Probleme somme DETECTED");
                 check=false;
             }
-            if(check===true){
+            if(check){
                 check=this.comparePile(source,dest);
+                if(check){
+                    check = !this.compareIsDoubleColor(source,dest);
+                }
             }
         }
         return check;
     };
 
+    this.compareIsDoubleColor=function(source,dest){
+        var cptColor=[0,0,0,0,0,0];
+
+        for(var y=0;y<source.getTaillePile();y++){
+            var couleur = source.getCouleurPieceFromPile(y);
+            cptColor[couleur]++;
+        }
+
+        for(var z=0;z<dest.getTaillePile();z++){
+            var couleur = dest.getCouleurPieceFromPile(z);
+            cptColor[couleur]++;
+        }
+        for(var x=0;x<5;x++){
+            if(cptColor[x]>1){
+                return true;
+            }
+        }
+        return false;
+    };
+
     this.comparePile=function(source,dest){
+        if(this.getTaillePileOnInter(source.getX() + source.getY()) < this.getTaillePileOnInter(dest.getX() + dest.getY())) {
+            console.log("compare taille pile DETECTED");
+        }
         return this.getTaillePileOnInter(source.getX() + source.getY()) >= this.getTaillePileOnInter(dest.getX() + dest.getY());
 
     };

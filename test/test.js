@@ -1,5 +1,7 @@
 'use strict';
 
+Math.seedrandom('1234');
+
 var LyngkTestCase = TestCase("LyngkTestCase");
 
 LyngkTestCase.prototype.testA = function(){
@@ -146,7 +148,7 @@ LyngkTestCase.prototype.testHist14 = function(){
     for(var i=0;i<jeu.getSizePlat();i++){
         if(jeu.getTaillePileOnInter(i)>=1){
             cpt_intersection_non_vide++;
-            if(jeu.getCouleurAssoOfInter(i) === jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i))){
+            if(jeu.getCouleurAssoOfInter(i) === jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i)-1)){
                 cpt_couleurAssocie_intersec_valide++;
             }
         }
@@ -155,6 +157,7 @@ LyngkTestCase.prototype.testHist14 = function(){
 };
 
 LyngkTestCase.prototype.testHist15 = function() {
+    console.log("Test15");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var colorSourceAvantDep=jeu.getCoordonCase("A3").getCouleurAssociee();
@@ -164,6 +167,7 @@ LyngkTestCase.prototype.testHist15 = function() {
 };
 
 LyngkTestCase.prototype.testHist16 = function() {
+    console.log("Test16");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("A3","B3");
@@ -173,6 +177,7 @@ LyngkTestCase.prototype.testHist16 = function() {
 };
 
 LyngkTestCase.prototype.testHist17 = function () {
+    console.log("Test17");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("B2","B3");
@@ -182,6 +187,7 @@ LyngkTestCase.prototype.testHist17 = function () {
 };
 
 LyngkTestCase.prototype.testHist18 = function () {
+    console.log("Test18");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var couleurB3=jeu.getCoordonCase("B3").getCouleurAssociee();
@@ -191,40 +197,39 @@ LyngkTestCase.prototype.testHist18 = function () {
 
 
 LyngkTestCase.prototype.testHist19 = function () {
+    console.log("Test19");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-
-    jeu.DeplacerVers("I7","H6");
-    jeu.DeplacerVers("H6","H5");
 
     var couleurH5=jeu.getCoordonCase("H5").getCouleurAssociee();
 
     jeu.DeplacerVers("H5","H8");
-    jeu.DeplacerVers("H5","F5");
-    jeu.DeplacerVers("H5","F3");
+
     assertTrue(jeu.getPlateauEtatCase("H5") !==Lyngk.State.VACANT && couleurH5===jeu.getCoordonCase("H5").getCouleurAssociee());
 };
 
 
 LyngkTestCase.prototype.testHist20 = function () {
+    console.log("Test20");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.DeplacerVers("A3","B3");
-    jeu.DeplacerVers("B3","B2");
-    jeu.DeplacerVers("B2","C2");
-    jeu.DeplacerVers("C2","D2");
+    jeu.DeplacerVers("E3","E4");
+    jeu.DeplacerVers("E4","E5");
+    jeu.DeplacerVers("E5","E6");
+    jeu.DeplacerVers("E6","F7");
 
-    var couleurSav=jeu.getCoordonCase("D2").getCouleurAssociee();
-    var taillePileD2=jeu.getTaillePileOnInter("D2");
+    var taillePileF7=jeu.getTaillePileOnInter("F7");
+    var couleurSav=jeu.getCoordonCase("F7").getCouleurAssociee();
 
-    jeu.DeplacerVers("D2","E2");
+    jeu.DeplacerVers("F7","G7");
 
-    assertTrue(jeu.getPlateauEtatCase("D2") !==Lyngk.State.VACANT && jeu.getTaillePileOnInter("D2")===taillePileD2
-        && couleurSav===jeu.getCoordonCase("D2").getCouleurAssociee());
+    assertTrue(jeu.getPlateauEtatCase("F7") ===Lyngk.State.FULL_STACK
+        && couleurSav===jeu.getCoordonCase("F7").getCouleurAssociee());
 };
 
 LyngkTestCase.prototype.testHist21 = function () {
+    console.log("Test21");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("A3","B3");
@@ -237,22 +242,23 @@ LyngkTestCase.prototype.testHist21 = function () {
 };
 
 LyngkTestCase.prototype.testHist22 = function () {
+    console.log("Test22");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.DeplacerVers("I7","H6");
 
-    jeu.DeplacerVers("G4","G5");
-    jeu.DeplacerVers("G5","G6");
+    jeu.DeplacerVers("E3","E4");
 
-    var couleurSav=jeu.getCoordonCase("H6").getCouleurAssociee();
-    jeu.DeplacerVers("H6","G6");
 
-    assertTrue(jeu.getPlateauEtatCase("H6") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("H6").getCouleurAssociee());
+    var couleurSav=jeu.getCoordonCase("E5").getCouleurAssociee();
+    //impossible car la pile en E4 > la pile en E5
+    jeu.DeplacerVers("E5","E4");
+
+    assertTrue(jeu.getPlateauEtatCase("E5") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("E5").getCouleurAssociee());
 
 };
 
-
 LyngkTestCase.prototype.testHist23 = function () {
+    console.log("Test23");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var IsColorTwiceInFuturePileC5=false;
@@ -265,7 +271,7 @@ LyngkTestCase.prototype.testHist23 = function () {
     compteur[jeu.getCouleurAssoOfInter("D5")]++;
     compteur[jeu.getCouleurAssoOfInter("C5")]++;
 
-    for (var i=0;i<6;i++){
+    for (var i=0;i<5;i++){
         if(compteur[i]>1){
             IsColorTwiceInFuturePileC5=true;
         }
@@ -275,8 +281,6 @@ LyngkTestCase.prototype.testHist23 = function () {
     jeu.DeplacerVers("E6","D5");
     jeu.DeplacerVers("D5","C5");
 
-    //parcourir les 5 cases ci dessus et regarder si plusieurs fois une meme couleur
-    //OU BIEN regarder C5 a la fin ( mauvaise idee car C5 peut etre composé que d'un jeton apres avoir ecrit le code ( si pas de dep avant ))
     assertTrue((jeu.getPlateauEtatCase("C5") !==Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===true) ||
         (jeu.getPlateauEtatCase("C5") ===Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===false));
 };
