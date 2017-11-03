@@ -3,11 +3,17 @@
 // enums definition
 Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
-/**
- * @return {boolean}
- */
+Lyngk.Players = {playerOne: 0, playerTwo: 1};
+
 Lyngk.Engine = function () {
     var plateau=[];
+
+    var activePlayer;
+
+    this.getActivePlayer=function(){
+        return activePlayer;
+    }
+
     var array_val_possib= ["A3",
         "B2","B3","B4","B5",
         "C1","C2","C3","C4","C5","C6","C7",
@@ -34,6 +40,7 @@ Lyngk.Engine = function () {
 
     this.Init_plateau_FULL = function() {
         var cptColor=[0,0,0,0,0,0];
+        activePlayer=Lyngk.Players.playerOne;
         for (var x = 0; x < lettre.length; x++) {
             for (var y = 1; y < 10; y++) {
                 if (array_val_possib.indexOf(lettre[x] + y) !== -1) {
@@ -97,7 +104,6 @@ Lyngk.Engine = function () {
 
     };
 
-
     this.getCouleurAssoOfInter=function(i){
         if(typeof i === 'number'){
             return plateau[i].getCouleurAssociee();
@@ -128,7 +134,6 @@ Lyngk.Engine = function () {
         if (check) {
             check=this.checkSourceToDest(source,dest);
             if(this.getSizePileSom(source,dest)>5){
-                console.log("Probleme somme DETECTED");
                 check=false;
             }
             if(check){
@@ -163,7 +168,6 @@ Lyngk.Engine = function () {
 
     this.comparePile=function(source,dest){
         if(this.getTaillePileOnInter(source.getX() + source.getY()) < this.getTaillePileOnInter(dest.getX() + dest.getY())) {
-            console.log("compare taille pile DETECTED");
         }
         return this.getTaillePileOnInter(source.getX() + source.getY()) >= this.getTaillePileOnInter(dest.getX() + dest.getY());
 

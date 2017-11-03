@@ -157,7 +157,6 @@ LyngkTestCase.prototype.testHist14 = function(){
 };
 
 LyngkTestCase.prototype.testHist15 = function() {
-    console.log("Test15");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var colorSourceAvantDep=jeu.getCoordonCase("A3").getCouleurAssociee();
@@ -167,7 +166,6 @@ LyngkTestCase.prototype.testHist15 = function() {
 };
 
 LyngkTestCase.prototype.testHist16 = function() {
-    console.log("Test16");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("A3","B3");
@@ -177,7 +175,6 @@ LyngkTestCase.prototype.testHist16 = function() {
 };
 
 LyngkTestCase.prototype.testHist17 = function () {
-    console.log("Test17");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("B2","B3");
@@ -187,7 +184,6 @@ LyngkTestCase.prototype.testHist17 = function () {
 };
 
 LyngkTestCase.prototype.testHist18 = function () {
-    console.log("Test18");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var couleurB3=jeu.getCoordonCase("B3").getCouleurAssociee();
@@ -197,7 +193,6 @@ LyngkTestCase.prototype.testHist18 = function () {
 
 
 LyngkTestCase.prototype.testHist19 = function () {
-    console.log("Test19");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
@@ -210,7 +205,6 @@ LyngkTestCase.prototype.testHist19 = function () {
 
 
 LyngkTestCase.prototype.testHist20 = function () {
-    console.log("Test20");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
@@ -229,7 +223,6 @@ LyngkTestCase.prototype.testHist20 = function () {
 };
 
 LyngkTestCase.prototype.testHist21 = function () {
-    console.log("Test21");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     jeu.DeplacerVers("A3","B3");
@@ -242,7 +235,6 @@ LyngkTestCase.prototype.testHist21 = function () {
 };
 
 LyngkTestCase.prototype.testHist22 = function () {
-    console.log("Test22");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
@@ -258,7 +250,6 @@ LyngkTestCase.prototype.testHist22 = function () {
 };
 
 LyngkTestCase.prototype.testHist23 = function () {
-    console.log("Test23");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     var IsColorTwiceInFuturePileC5=false;
@@ -289,5 +280,5 @@ LyngkTestCase.prototype.testHist24 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
     //joueur 1 = 0    et joueur 2 = 1
-    assertTrue(jeu.getActivePlayer()===0);
+    assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerOne);
 };
