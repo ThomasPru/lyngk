@@ -250,3 +250,33 @@ LyngkTestCase.prototype.testHist22 = function () {
     assertTrue(jeu.getPlateauEtatCase("H6") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("H6").getCouleurAssociee());
 
 };
+
+
+LyngkTestCase.prototype.testHist23 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    var IsColorTwiceInFuturePileC5=false;
+
+    var compteur=[0,0,0,0,0,0];
+
+    compteur[jeu.getCouleurAssoOfInter("E4")]++;
+    compteur[jeu.getCouleurAssoOfInter("E5")]++;
+    compteur[jeu.getCouleurAssoOfInter("E6")]++;
+    compteur[jeu.getCouleurAssoOfInter("D5")]++;
+    compteur[jeu.getCouleurAssoOfInter("C5")]++;
+
+    for (var i=0;i<6;i++){
+        if(compteur[i]>1){
+            IsColorTwiceInFuturePileC5=true;
+        }
+    }
+    jeu.DeplacerVers("E4","E5");
+    jeu.DeplacerVers("E5","E6");
+    jeu.DeplacerVers("E6","D5");
+    jeu.DeplacerVers("D5","C5");
+
+    //parcourir les 5 cases ci dessus et regarder si plusieurs fois une meme couleur
+    //OU BIEN regarder C5 a la fin ( mauvaise idee car C5 peut etre composé que d'un jeton apres avoir ecrit le code ( si pas de dep avant ))
+    assertTrue((jeu.getPlateauEtatCase("C5") !==Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===true) ||
+        (jeu.getPlateauEtatCase("C5") ===Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===false));
+};
