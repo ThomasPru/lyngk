@@ -334,5 +334,5 @@ LyngkTestCase.prototype.testHist27 = function () {
     //joueur2
     jeu.DeplacerVers("C6","C7");
 
-    assertTrue(jeu.getScore(Lyngk.Players.playerOne)===1 && jeu.nbPiecesRes===38);
+    assertTrue(jeu.getScore(Lyngk.Players.playerOne)===1 && jeu.nbPiecesRes()===38);
 };
