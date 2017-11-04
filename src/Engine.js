@@ -16,6 +16,8 @@ Lyngk.Engine = function () {
     var claimedColor=[null,null];
     var scorePlayer=[0,0];
 
+    var nbPossibilities=[40,40];
+
     this.getScore=function(player){
         return scorePlayer[player];
     };
@@ -32,10 +34,12 @@ Lyngk.Engine = function () {
         claimedColor[this.getActivePlayer()]=color;
     };
 
+    this.getNbCoupPosForPlayer=function(player){
+        return nbPossibilities[player];
+    };
 
     this.nbPiecesRes=function(){
         var nbPieces=0;
-
         for (var x = 0; x < array_val_possib.length; x++) {
             nbPieces+=this.getTaillePileOnInter(array_val_possib[x]);
         }
@@ -52,7 +56,7 @@ Lyngk.Engine = function () {
         "H5","H6","H7","H8",
             "I7"];
 
-    var lettre = ['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    var lettre = ['A','B','C','D','E','F','G','H','I'];
 
     this.Init_plateau_One = function() {
         for (var x = 0; x < lettre.length; x++) {
@@ -175,10 +179,8 @@ Lyngk.Engine = function () {
 
 
     this.checkColorClaimOponent=function(source,activePlayer){
-        if( source.getCouleurAssociee() === this.getPlayerColor((activePlayer+1)%2)){
-            return false;
-        }
-        return true;
+        return source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2);
+
     };
 
     this.check_deplacement=function(source,dest) {

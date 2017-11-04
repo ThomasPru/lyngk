@@ -356,6 +356,6 @@ LyngkTestCase.prototype.testHist28 = function () {
 LyngkTestCase.prototype.testHist29=function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    
-    assertTrue(jeu.nbCoupPosForPlayer(jeu.getActivePlayer())===40);
+
+    assertTrue(jeu.getNbCoupPosForPlayer(jeu.getActivePlayer())===40);
 };
