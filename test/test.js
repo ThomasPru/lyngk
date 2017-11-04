@@ -309,7 +309,7 @@ LyngkTestCase.prototype.testHist27 = function () {
     jeu.Init_plateau_FULL();
 
     //joueur1
-    jeu.claimColor(Lyngk.Color.BLUE);
+    jeu.claimColor(Lyngk.Color.GREEN);
     jeu.DeplacerVers("E3","E4");
 
     //joueur2
@@ -323,13 +323,13 @@ LyngkTestCase.prototype.testHist27 = function () {
     jeu.DeplacerVers("C4","C5");
 
     //joueur1
-    jeu.DeplacerVers("E5","E6");
+    jeu.DeplacerVers("E5","D4");
 
     //joueur2
-    jeu.DeplacerVers("C5","C6");
+    jeu.DeplacerVers("G5","G6");
 
     //joueur1, marque un point
-    jeu.DeplacerVers("E6","F7");
+    jeu.DeplacerVers("D4","D5");
 
     //joueur2
     jeu.DeplacerVers("C6","C7");

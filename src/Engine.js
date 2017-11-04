@@ -5,12 +5,20 @@ Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Lyngk.Players = {playerOne: 0, playerTwo: 1};
 
+/**
+ * @return {boolean}
+ */
 Lyngk.Engine = function () {
     var plateau=[];
 
     var activePlayer;
 
     var claimedColor=[null,null];
+    var scorePlayer=[0,0];
+
+    this.getScore=function(player){
+        return scorePlayer[player];
+    };
 
     this.getActivePlayer=function(){
         return activePlayer;
@@ -22,6 +30,16 @@ Lyngk.Engine = function () {
 
     this.claimColor=function(color){
         claimedColor[this.getActivePlayer()]=color;
+    };
+
+
+    this.nbPiecesRes=function(){
+        var nbPieces=0;
+
+        for (var x = 0; x < array_val_possib.length; x++) {
+            nbPieces+=this.getTaillePileOnInter(array_val_possib[x]);
+        }
+        return nbPieces;
     };
 
     var array_val_possib= ["A3",
@@ -49,6 +67,7 @@ Lyngk.Engine = function () {
     };
 
     this.Init_plateau_FULL = function() {
+        scorePlayer=[0,0];
         var cptColor=[0,0,0,0,0,0];
         activePlayer=Lyngk.Players.playerOne;
         for (var x = 0; x < lettre.length; x++) {
@@ -76,6 +95,10 @@ Lyngk.Engine = function () {
         }
     };
 
+    this.checkGetOnePoint=function(activePlayer,dest){
+        return dest.getTaillePile() === 5 && dest.getCouleurAssociee() === this.getPlayerColor(activePlayer);
+    };
+
     this.DeplacerVers=function(origin,destination){
         var source=this.getCoordonCase(origin);
         var dest=this.getCoordonCase(destination);
@@ -92,6 +115,13 @@ Lyngk.Engine = function () {
                     pile_tempoA.pop();
                 }
             }
+            if(this.checkGetOnePoint(this.getActivePlayer(),dest)){
+                scorePlayer[this.getActivePlayer()]++;
+                while (dest.getTaillePile() > 0) {
+                    dest.retirerPiece();
+                }
+            }
+
             if(activePlayer===Lyngk.Players.playerOne){
                 activePlayer=Lyngk.Players.playerTwo;
             }
@@ -99,6 +129,7 @@ Lyngk.Engine = function () {
                 activePlayer=Lyngk.Players.playerOne;
             }
         }
+
         return deplacementValide;
     };
 
@@ -176,6 +207,7 @@ Lyngk.Engine = function () {
         }
         for(var x=0;x<5;x++){
             if(cptColor[x]>1){
+                //console.log("PROBLEME : couleur en double sur la pile / joueur :" + this.getActivePlayer());
                 return true;
             }
         }
@@ -184,12 +216,16 @@ Lyngk.Engine = function () {
 
     this.comparePile=function(source,dest){
         if(this.getTaillePileOnInter(source.getX() + source.getY()) < this.getTaillePileOnInter(dest.getX() + dest.getY())) {
+            //console.log("PROBLEME : ajout sur une plus grande pile");
         }
         return this.getTaillePileOnInter(source.getX() + source.getY()) >= this.getTaillePileOnInter(dest.getX() + dest.getY());
 
     };
 
     this.getSizePileSom=function(source,dest){
+        if((this.getTaillePileOnInter(source.getX()+source.getY())+this.getTaillePileOnInter(dest.getX()+dest.getY()))>5){
+            //console.log("PROBLEME : somme des piles plus grande que 5");
+        }
         return this.getTaillePileOnInter(source.getX()+source.getY())+this.getTaillePileOnInter(dest.getX()+dest.getY());
     };
 
