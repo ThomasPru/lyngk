@@ -352,3 +352,10 @@ LyngkTestCase.prototype.testHist28 = function () {
 
     assertTrue(taillePileSavE4 === jeu.getTaillePileOnInter("E4") && taillePileSavE5===jeu.getTaillePileOnInter("E5"));
 };
+
+LyngkTestCase.prototype.testHist29=function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    
+    assertTrue(jeu.nbCoupPosForPlayer(jeu.getActivePlayer())===40);
+};
