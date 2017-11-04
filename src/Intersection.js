@@ -67,6 +67,7 @@ Lyngk.Intersection = function (x,y) {
 
             if(this.getTaillePile()===0){
                 state = Lyngk.State.VACANT;
+                couleurAssociee=null;
             }
             else {
                 couleurAssociee=this.getCouleurPieceFromPile(this.getTaillePile()-1);

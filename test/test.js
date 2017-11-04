@@ -296,9 +296,9 @@ LyngkTestCase.prototype.testHist26 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.claimColor(Lyngk.Color.RED);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
     jeu.DeplacerVers("A3","B3");
-    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
 
     assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne) === Lyngk.Color.RED
         && jeu.getPlayerColor(Lyngk.Players.playerTwo) === Lyngk.Color.GREEN);
@@ -309,11 +309,11 @@ LyngkTestCase.prototype.testHist27 = function () {
     jeu.Init_plateau_FULL();
 
     //joueur1
-    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
     jeu.DeplacerVers("E3","E4");
 
     //joueur2
-    jeu.claimColor(Lyngk.Color.RED);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
     jeu.DeplacerVers("C3","C4");
 
     //joueur1
@@ -340,11 +340,11 @@ LyngkTestCase.prototype.testHist27 = function () {
 LyngkTestCase.prototype.testHist28 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
     jeu.DeplacerVers("E3","E4");
 
     //joueur2 ( coup impossible car vert reclamé par j1
-    jeu.claimColor(Lyngk.Color.RED);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
 
     var taillePileSavE4=jeu.getTaillePileOnInter("E4");
     var taillePileSavE5=jeu.getTaillePileOnInter("E5");
@@ -365,7 +365,10 @@ LyngkTestCase.prototype.testHist30=function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.claimColor(Lyngk.Color.BLACK);
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLACK);
+
+    //console.log("couleur de la case B4 avant deplace :" + jeu.getCouleurAssoOfInter("B4"));
     jeu.DeplacerVers("B3","B4");
+
     assertTrue(jeu.getNbCoupPosForPlayer(Lyngk.Players.playerTwo)===32);
 };
