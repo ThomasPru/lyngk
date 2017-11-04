@@ -174,6 +174,13 @@ Lyngk.Engine = function () {
     };
 
 
+    this.checkColorClaimOponent=function(source,activePlayer){
+        if( source.getCouleurAssociee() === this.getPlayerColor((activePlayer+1)%2)){
+            return false;
+        }
+        return true;
+    };
+
     this.check_deplacement=function(source,dest) {
         var check;
         check = checkLegalLigne(source, dest);
@@ -187,6 +194,9 @@ Lyngk.Engine = function () {
                 check=this.comparePile(source,dest);
                 if(check){
                     check = !this.compareIsDoubleColor(source,dest);
+                    if(check){
+                        check=this.checkColorClaimOponent(source,this.getActivePlayer());
+                    }
                 }
             }
         }
