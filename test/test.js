@@ -359,3 +359,13 @@ LyngkTestCase.prototype.testHist29=function () {
 
     assertTrue(jeu.getNbCoupPosForPlayer(jeu.getActivePlayer())===40);
 };
+
+
+LyngkTestCase.prototype.testHist30=function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    jeu.claimColor(Lyngk.Color.BLACK);
+    jeu.DeplacerVers("B3","B4");
+    assertTrue(jeu.getNbCoupPosForPlayer(Lyngk.Players.playerTwo)===32);
+};
