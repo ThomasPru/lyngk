@@ -336,3 +336,20 @@ LyngkTestCase.prototype.testHist27 = function () {
 
     assertTrue(jeu.getScore(Lyngk.Players.playerOne)===1 && jeu.nbPiecesRes()===38);
 };
+
+LyngkTestCase.prototype.testHist28 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.DeplacerVers("E3","E4");
+
+    //joueur2 ( coup impossible car vert reclamé par j1
+    jeu.claimColor(Lyngk.Color.RED);
+
+    var taillePileSavE4=jeu.getTaillePileOnInter("E4");
+    var taillePileSavE5=jeu.getTaillePileOnInter("E5");
+    jeu.DeplacerVers("E4","E5");
+    //console.log(taillePileSavE4 + "doit etre egal a " + jeu.getTaillePileOnInter("E4"));
+    //console.log(taillePileSavE5 + "doit etre egal a " + jeu.getTaillePileOnInter("E5"));
+    assertTrue(taillePileSavE4 === jeu.getTaillePileOnInter("E4") && taillePileSavE5===jeu.getTaillePileOnInter("E5"));
+};
