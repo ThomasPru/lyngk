@@ -300,8 +300,8 @@ LyngkTestCase.prototype.testHist26 = function () {
     jeu.DeplacerVers("A3","B3");
     jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
 
-    assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne) === Lyngk.Color.RED
-        && jeu.getPlayerColor(Lyngk.Players.playerTwo) === Lyngk.Color.GREEN);
+    assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne,0) === Lyngk.Color.RED
+        && jeu.getPlayerColor(Lyngk.Players.playerTwo,0) === Lyngk.Color.GREEN);
 };
 
 LyngkTestCase.prototype.testHist27 = function () {
@@ -376,15 +376,11 @@ LyngkTestCase.prototype.testHist30=function () {
 LyngkTestCase.prototype.testHist31=function(){
     var jeu= new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-
-
     var direcPossibleC1 = jeu.getDirecPossibOfInters("C1");
-
     var direcPossibleG5 = jeu.getDirecPossibOfInters("G5");
     /*
     console.log("possib pour G5 : " + direcPossibleG5);
     console.log("COULEUR G5 : " + jeu.getCouleurAssoOfInter("G5"));
-
     console.log("G4 :" + jeu.getCoordonCase("G4").getCouleurAssociee());
     console.log("G6 :" + jeu.getCoordonCase("G6").getCouleurAssociee());
     console.log("F5 :" + jeu.getCoordonCase("F5").getCouleurAssociee());
@@ -392,9 +388,13 @@ LyngkTestCase.prototype.testHist31=function(){
     console.log("H6 :" + jeu.getCoordonCase("H6").getCouleurAssociee());
     console.log("F4 :" + jeu.getCoordonCase("F4").getCouleurAssociee());
     */
-
     //C1 est sur un bord, cette inters n'a que 2 coups possibles ( puisque les deux possibilites n'ont pas la meme couleur associee )
     //G5 qui a 6 directions, n'en a que trois car 3 pieces autour de cette inters ont la meme couleur que celle ci
     assertTrue(direcPossibleC1===2 && direcPossibleG5===3);
+};
+
+LyngkTestCase.prototype.testHist31=function() {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
 };
 

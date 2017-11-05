@@ -13,7 +13,7 @@ Lyngk.Engine = function () {
 
     var activePlayer;
 
-    var claimedColor=[null,null];
+    var claimedColor=[[null,null],[null,null]];
     var scorePlayer=[0,0];
 
     var nbPossibilities=[40,40];
@@ -26,8 +26,21 @@ Lyngk.Engine = function () {
         return activePlayer;
     };
 
-    this.getPlayerColor=function(no){
-        return claimedColor[no];
+    this.getPlayerColor=function(player,no){
+        return claimedColor[player][no];
+    };
+
+    this.claimColor=function(player,color){
+        if(color!==claimedColor[(this.getActivePlayer()+1)%2][0] && color!==claimedColor[(this.getActivePlayer()+1)%2][1]){
+            if(claimedColor[this.getActivePlayer()][0]!==null){
+                claimedColor[this.getActivePlayer()][1]=color;
+            }
+            else{
+                claimedColor[this.getActivePlayer()][0]=color;
+            }
+        }
+
+        this.countPossibilities();
     };
 
     this.getNbCoupPosForPlayer=function(player){
@@ -130,7 +143,7 @@ Lyngk.Engine = function () {
                 }
             }
         }
-        
+
         deep=0;
         if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1))!==-1){
             desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1));
@@ -155,25 +168,18 @@ Lyngk.Engine = function () {
         var possibilities=0;
         for(var x=0;x<array_val_possib.length;x++){
             if(( this.getCouleurAssoOfInter(array_val_possib[x])!==null)
-                &&(this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(this.getActivePlayer() )
-                || (this.getPlayerColor(this.getActivePlayer())===null && this.getCouleurAssoOfInter(array_val_possib[x])!==Lyngk.Color.WHITE ))){
+                &&( this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(this.getActivePlayer(),0) ||
+                    this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(this.getActivePlayer(),1)
+                || (this.getPlayerColor(this.getActivePlayer(),0)===null && this.getCouleurAssoOfInter(array_val_possib[x])!==Lyngk.Color.WHITE )
+                )){
                 possibilities++;
             }
         }
-        if(this.getPlayerColor((this.getActivePlayer()+1)%2)!==null && this.getPlayerColor(this.getActivePlayer())===null){
+        if(this.getPlayerColor((this.getActivePlayer()+1)%2)!==null && this.getPlayerColor(this.getActivePlayer(),0)===null){
             possibilities-=8;
         }
         nbPossibilities[this.getActivePlayer()]=possibilities;
     };
-
-    this.claimColor=function(player,color){
-        if((player===Lyngk.Players.playerOne && color!==Lyngk.Players.playerTwo) ||
-            (player===Lyngk.Players.playerTwo && color!==Lyngk.Players.playerOne)){
-            claimedColor[player]=color;
-        }
-        this.countPossibilities();
-    };
-
 
     this.nbPiecesRes=function(){
         var nbPieces=0;
@@ -237,7 +243,8 @@ Lyngk.Engine = function () {
     };
 
     this.checkGetOnePoint=function(activePlayer,dest){
-        return dest.getTaillePile() === 5 && dest.getCouleurAssociee() === this.getPlayerColor(activePlayer);
+        return dest.getTaillePile() === 5 &&
+            (dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,0) || dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,1));
     };
 
     this.DeplacerVers=function(origin,destination){
@@ -315,7 +322,8 @@ Lyngk.Engine = function () {
     };
 
     this.checkColorClaimOponent=function(source,activePlayer){
-        return source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2);
+        return (source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2,0) &&
+            source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2,1));
     };
 
     this.check_deplacement=function(source,dest) {
