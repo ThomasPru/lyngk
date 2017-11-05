@@ -372,3 +372,13 @@ LyngkTestCase.prototype.testHist30=function () {
 
     assertTrue(jeu.getNbCoupPosForPlayer(Lyngk.Players.playerTwo)===32);
 };
+
+LyngkTestCase.prototype.testHist31=function(){
+    var jeu= new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+
+    var direcPossibleE4 = jeu.getDirecPossibOfInters("E4");
+    var direcPossibleA3 = jeu.getDirecPossibOfInters("A3");
+
+    assertTrue(direcPossibleA3===2 && direcPossibleE4===6);
+};
