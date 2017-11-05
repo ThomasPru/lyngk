@@ -377,8 +377,24 @@ LyngkTestCase.prototype.testHist31=function(){
     var jeu= new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    var direcPossibleE4 = jeu.getDirecPossibOfInters("E4");
-    var direcPossibleA3 = jeu.getDirecPossibOfInters("A3");
 
-    assertTrue(direcPossibleA3===2 && direcPossibleE4===6);
+    var direcPossibleC1 = jeu.getDirecPossibOfInters("C1");
+
+    var direcPossibleG5 = jeu.getDirecPossibOfInters("G5");
+    /*
+    console.log("possib pour G5 : " + direcPossibleG5);
+    console.log("COULEUR G5 : " + jeu.getCouleurAssoOfInter("G5"));
+
+    console.log("G4 :" + jeu.getCoordonCase("G4").getCouleurAssociee());
+    console.log("G6 :" + jeu.getCoordonCase("G6").getCouleurAssociee());
+    console.log("F5 :" + jeu.getCoordonCase("F5").getCouleurAssociee());
+    console.log("H5 :" + jeu.getCoordonCase("H5").getCouleurAssociee());
+    console.log("H6 :" + jeu.getCoordonCase("H6").getCouleurAssociee());
+    console.log("F4 :" + jeu.getCoordonCase("F4").getCouleurAssociee());
+    */
+
+    //C1 est sur un bord, cette inters n'a que 2 coups possibles ( puisque les deux possibilites n'ont pas la meme couleur associee )
+    //G5 qui a 6 directions, n'en a que trois car 3 pieces autour de cette inters ont la meme couleur que celle ci
+    assertTrue(direcPossibleC1===2 && direcPossibleG5===3);
 };
+

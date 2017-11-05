@@ -34,32 +34,136 @@ Lyngk.Engine = function () {
         return nbPossibilities[player];
     };
 
+    this.getDirecPossibOfInters=function(origin){
+        var deep=0;
+        var inters=this.getCoordonCase(origin);
+        var desti;
+
+        var nbDirecPos=0;
+
+        if(array_val_possib.indexOf(origin[0] + (parseInt(origin[1])+1+deep) !== -1)) {
+            desti=this.getCoordonCase(origin[0] + (parseInt(origin[1])+1+deep));
+            //pour le deplacement meme X  avec Y qui monte
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((parseInt(origin[1])+1+deep)>=10) {
+                    break;
+                }
+                desti = this.getCoordonCase(origin[0] + (parseInt(origin[1]) + 1 + deep));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+
+        deep=0;
+        if(array_val_possib.indexOf(  origin[0] +      (parseInt(origin[1])-1-deep)        )       !== -1) {
+            desti = this.getCoordonCase(origin[0] + (parseInt(origin[1])-1-deep));
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((parseInt(origin[1])-1-deep)<=0) {
+                    break;
+                }
+                desti = this.getCoordonCase(origin[0] + (parseInt(origin[1])-1-deep));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+
+        deep=0;
+        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]))!==-1){
+            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]));
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((origin[0]).charCodeAt()+1+deep>=75) {
+                    break;
+                }
+                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+
+        deep=0;
+        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]))!==-1){
+            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]));
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((origin[0]).charCodeAt()-1-deep<65) {
+                    break;
+                }
+                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+
+        deep=0;
+        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1))!==-1){
+            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1+deep));
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((origin[0]).charCodeAt()+1+deep>=75 || parseInt(origin[1])+1+deep>=10) {
+                    break;
+                }
+                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1+deep));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+        
+        deep=0;
+        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1))!==-1){
+            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1));
+            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+                deep++;
+                if((origin[0]).charCodeAt()-1-deep<65 || parseInt(origin[1])-1-deep<=0) {
+                    break;
+                }
+                desti = this.getCoordonCase(String.fromCharCode(((origin[0]).charCodeAt())-1-deep) + (parseInt(origin[1])-1-deep));
+
+            }
+            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
+                if (this.check_deplacement(inters, desti)) {
+                    nbDirecPos++;
+                }
+            }
+        }
+        return nbDirecPos;
+    };
+
     this.countPossibilities=function(){
-        //pour le joueur 1
         var possibilities=0;
         for(var x=0;x<array_val_possib.length;x++){
-            if(( this.getCouleurAssoOfInter(array_val_possib[x])!==null) &&(this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(Lyngk.Players.playerOne && this.getCouleurAssoOfInter(array_val_possib[x])!==null))
-                || (this.getPlayerColor(Lyngk.Players.playerOne)===null && this.getCouleurAssoOfInter(array_val_possib[x])!==Lyngk.Color.WHITE )){
+            if(( this.getCouleurAssoOfInter(array_val_possib[x])!==null)
+                &&(this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(this.getActivePlayer() )
+                || (this.getPlayerColor(this.getActivePlayer())===null && this.getCouleurAssoOfInter(array_val_possib[x])!==Lyngk.Color.WHITE ))){
                 possibilities++;
             }
         }
-        if(this.getPlayerColor(Lyngk.Players.playerTwo)!==null && this.getPlayerColor(Lyngk.Players.playerOne)===null){
+        if(this.getPlayerColor((this.getActivePlayer()+1)%2)!==null && this.getPlayerColor(this.getActivePlayer())===null){
             possibilities-=8;
         }
-        nbPossibilities[Lyngk.Players.playerOne]=possibilities;
-
-        //pour le joueur 2
-        possibilities=0;
-        for(var x=0;x<array_val_possib.length;x++){
-            if((this.getCouleurAssoOfInter(array_val_possib[x])!==null) &&(this.getCouleurAssoOfInter(array_val_possib[x])===this.getPlayerColor(Lyngk.Players.playerTwo )
-                || (this.getPlayerColor(Lyngk.Players.playerTwo)===null && this.getCouleurAssoOfInter(array_val_possib[x])!==Lyngk.Color.WHITE))){
-                possibilities++;
-            }
-        }
-        if(this.getPlayerColor(Lyngk.Players.playerOne)!==null && this.getPlayerColor(Lyngk.Players.playerTwo)===null){
-            possibilities-=8;
-        }
-        nbPossibilities[Lyngk.Players.playerTwo]=possibilities;
+        nbPossibilities[this.getActivePlayer()]=possibilities;
     };
 
     this.claimColor=function(player,color){
@@ -167,7 +271,6 @@ Lyngk.Engine = function () {
             }
             this.countPossibilities();
         }
-
         return deplacementValide;
     };
 
@@ -241,13 +344,11 @@ Lyngk.Engine = function () {
         var cptColor=[0,0,0,0,0,0];
 
         for(var y=0;y<source.getTaillePile();y++){
-            var couleur = source.getCouleurPieceFromPile(y);
-            cptColor[couleur]++;
+            cptColor[source.getCouleurPieceFromPile(y)]++;
         }
 
         for(var z=0;z<dest.getTaillePile();z++){
-            var couleur = dest.getCouleurPieceFromPile(z);
-            cptColor[couleur]++;
+            cptColor[dest.getCouleurPieceFromPile(z)]++;
         }
         for(var x=0;x<5;x++){
             if(cptColor[x]>1){
