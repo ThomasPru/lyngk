@@ -4,6 +4,7 @@ Math.seedrandom('1234');
 
 var LyngkTestCase = TestCase("LyngkTestCase");
 
+
 LyngkTestCase.prototype.testA = function(){
     var c = new Lyngk.Coordinates("A",1);
     assertFalse(c.valid());
@@ -334,7 +335,7 @@ LyngkTestCase.prototype.testHist27 = function () {
     //joueur2
     jeu.DeplacerVers("C6","C7");
 
-    assertTrue(jeu.getScore(Lyngk.Players.playerOne)===1 && jeu.nbPiecesRes()===38);
+    assertTrue(jeu.getScore(Lyngk.Players.playerOne,4)===1 && jeu.nbPiecesRes()===38);
 };
 
 LyngkTestCase.prototype.testHist28 = function () {
@@ -378,23 +379,134 @@ LyngkTestCase.prototype.testHist31=function(){
     jeu.Init_plateau_FULL();
     var direcPossibleC1 = jeu.getDirecPossibOfInters("C1");
     var direcPossibleG5 = jeu.getDirecPossibOfInters("G5");
-    /*
-    console.log("possib pour G5 : " + direcPossibleG5);
-    console.log("COULEUR G5 : " + jeu.getCouleurAssoOfInter("G5"));
-    console.log("G4 :" + jeu.getCoordonCase("G4").getCouleurAssociee());
-    console.log("G6 :" + jeu.getCoordonCase("G6").getCouleurAssociee());
-    console.log("F5 :" + jeu.getCoordonCase("F5").getCouleurAssociee());
-    console.log("H5 :" + jeu.getCoordonCase("H5").getCouleurAssociee());
-    console.log("H6 :" + jeu.getCoordonCase("H6").getCouleurAssociee());
-    console.log("F4 :" + jeu.getCoordonCase("F4").getCouleurAssociee());
-    */
+
     //C1 est sur un bord, cette inters n'a que 2 coups possibles ( puisque les deux possibilites n'ont pas la meme couleur associee )
     //G5 qui a 6 directions, n'en a que trois car 3 pieces autour de cette inters ont la meme couleur que celle ci
     assertTrue(direcPossibleC1===2 && direcPossibleG5===3);
 };
 
-LyngkTestCase.prototype.testHist31=function() {
+
+LyngkTestCase.prototype.testHist32=function() {
+    console.log("Test 32 ----------------------");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-};
 
+    //joueur1
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
+    jeu.DeplacerVers("E3","E4");
+
+
+    //joueur2
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
+    jeu.DeplacerVers("C2","C3");
+
+
+    //joueur1
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLUE);
+    jeu.DeplacerVers("E4","E5");
+
+
+    //joueur2
+    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLACK);
+    jeu.DeplacerVers("C3","B3");
+
+
+    //joueur1
+    jeu.DeplacerVers("F4","F5");
+
+    //joueur2
+    jeu.DeplacerVers("B3","D3");
+
+    //JOUEUR1
+    jeu.DeplacerVers("F5","F6");
+
+    //joueur2
+    jeu.DeplacerVers("B4","C5");
+
+    //JOUEUR1
+    jeu.DeplacerVers("F6","G6");
+
+    //joueur2
+    jeu.DeplacerVers("C5","D6");
+
+    //JOUEUR1
+    jeu.DeplacerVers("G6","H7");
+
+    //joueur2
+    jeu.DeplacerVers("D6","D7");
+
+    //JOUEUR1
+    jeu.DeplacerVers("C1","D2");
+
+
+    //joueur2
+    jeu.DeplacerVers("D7","C7");
+
+
+    //JOUEUR1
+    jeu.DeplacerVers("D2","B2");
+
+    //joueur2
+    jeu.DeplacerVers("E7","F8");
+
+
+    //JOUEUR1
+    jeu.DeplacerVers("B5","C6");
+
+    //joueur2
+    jeu.DeplacerVers("G8","H8");
+
+
+    //JOUEUR1
+    jeu.DeplacerVers("G7","G5");
+
+    //joueur2
+    jeu.DeplacerVers("G4","G3");
+
+    //JOUEUR1
+    jeu.DeplacerVers("B2","D4");
+
+    //joueur2
+    jeu.DeplacerVers("F3","H5");
+
+    //JOUEUR1
+    jeu.DeplacerVers("D4","D5");
+
+    //joueur2
+    jeu.DeplacerVers("E6","C4");
+
+    //JOUEUR1
+    jeu.DeplacerVers("I7","H6");
+
+
+    //joueur2
+    jeu.DeplacerVers("F8","G9");
+
+    //joueur1
+    console.log("Joueur actuel (0 pour j1 et 1 pour j2 ) :" + jeu.getActivePlayer());
+    jeu.DeplacerVers("H6","C6");
+    console.log("AFTER -> ETAT H6, C6 : " + jeu.getTaillePileOnInter("H6") + " , " +jeu.getTaillePileOnInter("C6"));
+
+
+    //joueur2
+    console.log("Joueur actuel (0 pour j1 et 1 pour j2 ) :" + jeu.getActivePlayer());
+    jeu.DeplacerVers("H5","E2");
+    console.log("AFTER -> ETAT H5, E2 : " + jeu.getTaillePileOnInter("H5") + " , " +jeu.getTaillePileOnInter("E2"));
+
+
+    console.log("joueur actuel : " + jeu.getActivePlayer());
+    console.log("Couleur de player ACTUEL : " + jeu.getPlayerColor(jeu.getActivePlayer(),0) +" , " + jeu.getPlayerColor(jeu.getActivePlayer(),1));
+    jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),0));
+    console.log("------");
+    jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),1));
+
+
+    console.log("FIIIINNNNNNNNNNNNNNNNNNNN" );
+    console.log(jeu.getGameState());
+    console.log(jeu.getWinner());
+
+    assertTrue(jeu.getGameState()===Lyngk.GameEtat.OVER && jeu.getWinner()==="Player One !");
+    //le jeu s'arrete lorsqu'il n'y a plus aucun coup a jouer,
+    //ayant un probleme dans la verification des derniers coups, on ne peut donc pas verifier les conditions
+    //de l'assert
+};

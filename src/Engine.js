@@ -5,18 +5,48 @@ Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Lyngk.Players = {playerOne: 0, playerTwo: 1};
 
+//Lyngk.GameEtat = {PLAY:0, OVER:1};
+
 /**
  * @return {boolean}
  */
 Lyngk.Engine = function () {
+    this.repererColor=function(color) {
+        var possibilites=0;
+        for(var x=0;x<array_val_possib.length;x++){
+            if (array_val_possib[x] !== -1) {
+                var co=array_val_possib[x];
+                if (this.getCouleurAssoOfInter(co) ===color) {
+                    if(this.getDirecPossibOfInters(co)>0) {
+                        possibilites++;
+                    }
+                }
+            }
+        }
+        return possibilites;
+    };
+/*
+    var winner;
+
+    this.getWinner=function(){
+        return winner;
+    };
+*/
     var plateau=[];
 
     var activePlayer;
+    /*
+    var gameState=Lyngk.GameEtat.PLAY;
 
+    this.getGameState=function(){
+        return gameState;
+    };
+*/
     var claimedColor=[[null,null],[null,null]];
     var scorePlayer=[0,0];
 
     var nbPossibilities=[40,40];
+
 
     this.getScore=function(player){
         return scorePlayer[player];
@@ -50,115 +80,113 @@ Lyngk.Engine = function () {
     this.getDirecPossibOfInters=function(origin){
         var deep=0;
         var inters=this.getCoordonCase(origin);
-        var desti;
+        var desti=origin[0] + (parseInt(origin[1])+1+deep);
 
         var nbDirecPos=0;
 
-        if(array_val_possib.indexOf(origin[0] + (parseInt(origin[1])+1+deep) !== -1)) {
-            desti=this.getCoordonCase(origin[0] + (parseInt(origin[1])+1+deep));
-            //pour le deplacement meme X  avec Y qui monte
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+        while(array_val_possib.indexOf(desti) !== -1){
+            if(this.getTaillePileOnInter(desti) === 0) {
                 deep++;
-                if((parseInt(origin[1])+1+deep)>=10) {
-                    break;
-                }
-                desti = this.getCoordonCase(origin[0] + (parseInt(origin[1]) + 1 + deep));
-
+                desti = origin[0] + (parseInt(origin[1]) + 1 + deep);
             }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+            else{
+                break;
+            }
+        }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
+            }
+        }
+        desti=origin[0] + (parseInt(origin[1])-1-deep);
+        deep=0;
+        while(array_val_possib.indexOf(desti) !== -1){
+            if(this.getTaillePileOnInter(desti) === 0) {
+                deep++;
+                desti = origin[0] + (parseInt(origin[1]) - 1 - deep);
+            }
+            else{
+                break;
+            }
+        }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
             }
         }
 
+        desti=String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]);
         deep=0;
-        if(array_val_possib.indexOf(  origin[0] +      (parseInt(origin[1])-1-deep)        )       !== -1) {
-            desti = this.getCoordonCase(origin[0] + (parseInt(origin[1])-1-deep));
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+        while(array_val_possib.indexOf(desti) !== -1) {
+            if (this.getTaillePileOnInter(desti) === 0) {
                 deep++;
-                if((parseInt(origin[1])-1-deep)<=0) {
-                    break;
-                }
-                desti = this.getCoordonCase(origin[0] + (parseInt(origin[1])-1-deep));
-
+                desti = String.fromCharCode((origin[0]).charCodeAt() + 1 + deep) + parseInt(origin[1]);
             }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+            else{
+                break;
+            }
+        }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
             }
         }
 
+        desti=String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]);
         deep=0;
-        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]))!==-1){
-            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]));
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+        while(array_val_possib.indexOf(desti) !== -1){
+            if(this.getTaillePileOnInter(desti) === 0) {
                 deep++;
-                if((origin[0]).charCodeAt()+1+deep>=75) {
-                    break;
-                }
-                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + parseInt(origin[1]));
-
+                desti = String.fromCharCode((origin[0]).charCodeAt() - 1 - deep) + parseInt(origin[1]);
             }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+            else{
+                break;
+            }
+        }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
             }
         }
 
+        desti=String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1+deep);
         deep=0;
-        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]))!==-1){
-            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]));
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
+        while(array_val_possib.indexOf(desti) !== -1){
+            if(this.getTaillePileOnInter(desti) === 0) {
                 deep++;
-                if((origin[0]).charCodeAt()-1-deep<65) {
-                    break;
-                }
-                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + parseInt(origin[1]));
-
+                desti = String.fromCharCode((origin[0]).charCodeAt() + 1 + deep) + (parseInt(origin[1]) + 1 + deep);
             }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+            else{
+                break;
+            }
+        }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
             }
         }
 
-        deep=0;
-        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1))!==-1){
-            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1+deep));
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
-                deep++;
-                if((origin[0]).charCodeAt()+1+deep>=75 || parseInt(origin[1])+1+deep>=10) {
-                    break;
-                }
-                desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()+1+deep) + (parseInt(origin[1])+1+deep));
 
+        desti=String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1-deep);
+        deep=0;
+        while(array_val_possib.indexOf(desti) !== -1 ){
+            if(this.getTaillePileOnInter(desti) === 0) {
+                deep++;
+                desti = String.fromCharCode((origin[0]).charCodeAt() - 1 - deep) + (parseInt(origin[1]) - 1 - deep);
             }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+            else{
+                break;
             }
         }
-
-        deep=0;
-        if(array_val_possib.indexOf(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1))!==-1){
-            desti = this.getCoordonCase(String.fromCharCode((origin[0]).charCodeAt()-1-deep) + (parseInt(origin[1])-1));
-            while ((array_val_possib.indexOf(desti) !== -1) && (this.getTaillePileOnInter(desti) === 0)) {
-                deep++;
-                if((origin[0]).charCodeAt()-1-deep<65 || parseInt(origin[1])-1-deep<=0) {
-                    break;
-                }
-                desti = this.getCoordonCase(String.fromCharCode(((origin[0]).charCodeAt())-1-deep) + (parseInt(origin[1])-1-deep));
-
-            }
-            if (array_val_possib.indexOf(desti.getX() + desti.getY()) !== -1) {
-                if (this.check_deplacement(inters, desti)) {
-                    nbDirecPos++;
-                }
+        if(array_val_possib.indexOf(desti) !== -1) {
+            desti = this.getCoordonCase(desti);
+            if (this.check_deplacement(inters, desti)) {
+                nbDirecPos++;
             }
         }
         return nbDirecPos;
@@ -243,45 +271,117 @@ Lyngk.Engine = function () {
     };
 
     this.checkGetOnePoint=function(activePlayer,dest){
-        return dest.getTaillePile() === 5 &&
-            (dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,0) || dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,1));
+        return (dest.getTaillePile() === 5 &&
+            (dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,0) || dest.getCouleurAssociee() === this.getPlayerColor(activePlayer,1)));
     };
 
     this.DeplacerVers=function(origin,destination){
-        var source=this.getCoordonCase(origin);
-        var dest=this.getCoordonCase(destination);
-        var deplacementValide=this.check_deplacement(source,dest);
-        if(deplacementValide===true) {
-            if (dest.getTaillePile() > 0) {
-                var pile_tempoA = [];
-                while (source.getTaillePile() > 0) {
-                    pile_tempoA.push(source.getCouleurAssociee());
-                    source.retirerPiece();
-                }
-                while (pile_tempoA.length > 0) {
-                    dest.poserPiece(pile_tempoA[pile_tempoA.length-1]);
-                    pile_tempoA.pop();
-                }
-            }
-            if(this.checkGetOnePoint(this.getActivePlayer(),dest)){
-                scorePlayer[this.getActivePlayer()]++;
-                while (dest.getTaillePile() > 0) {
-                    dest.retirerPiece();
-                }
-            }
+        var deplacementValide=false;
 
-            if(activePlayer===Lyngk.Players.playerOne){
-                activePlayer=Lyngk.Players.playerTwo;
-            }
-            else{
-                activePlayer=Lyngk.Players.playerOne;
-            }
-            this.countPossibilities();
+        //if(this.getGameState()===Lyngk.GameEtat.OVER){
+        //    console.log("JEU TERMINE");
+        //}
+
+        //else {
+            var source = this.getCoordonCase(origin);
+            var dest = this.getCoordonCase(destination);
+            deplacementValide = this.check_deplacement(source, dest);
+            if (deplacementValide === true) {
+                if (dest.getTaillePile() > 0) {
+                    var pile_tempoA = [];
+                    while (source.getTaillePile() > 0) {
+                        pile_tempoA.push(source.getCouleurAssociee());
+                        source.retirerPiece();
+                    }
+                    while (pile_tempoA.length > 0) {
+                        dest.poserPiece(pile_tempoA[pile_tempoA.length - 1]);
+                        pile_tempoA.pop();
+                    }
+                }
+                if (this.checkGetOnePoint(this.getActivePlayer(), dest)) {
+                    console.log("HOP 1 point pour le joueur : " + this.getActivePlayer());
+                    scorePlayer[this.getActivePlayer()]++;
+                    console.log("SON SCORE : " + this.getScore(this.getActivePlayer()));
+                    while (dest.getTaillePile() > 0) {
+                        dest.retirerPiece();
+                    }
+                }
+
+                if (activePlayer === Lyngk.Players.playerOne) {
+                    activePlayer = Lyngk.Players.playerTwo;
+                }
+                else {
+                    activePlayer = Lyngk.Players.playerOne;
+                }
+                this.countPossibilities();
+                /*
+                console.log("Possibilities restants : " + this.getNbCoupPosForPlayer(this.getActivePlayer()));
+                if(this.getPlayerColor(this.getActivePlayer(),0)!==null && this.getPlayerColor((this.getActivePlayer()+1)%2,0)!==null)
+                if (this.repererColor(this.getPlayerColor(this.getActivePlayer(),0)) === 0 &&
+                        (this.repererColor(this.getPlayerColor(this.getActivePlayer(),1))===0)) {
+                    gameState = Lyngk.GameEtat.OVER;
+                }
+                if (gameState === Lyngk.GameEtat.OVER) {
+                    this.callWinner();
+                }
+                */
+            //}
         }
         return deplacementValide;
     };
+    /*
+    this.checkSubPile=function(hauteur){
+        var pile_joueur1=0;
+        var pile_joueur2=0;
+        for(var x=0;x<array_val_possib.length;x++) {
+            if (this.getTaillePileOnInter(array_val_possib[x])=== hauteur &&
+                (this.getCouleurAssoOfInter(array_val_possib[x]) === this.getPlayerColor(Lyngk.Players.playerOne,0)) ||
+                (this.getCouleurAssoOfInter(array_val_possib[x]) === this.getPlayerColor(Lyngk.Players.playerOne,1))) {
+                pile_joueur1++;
+            }
+        }
+        for(var x=0;x<array_val_possib.length;x++) {
+            if (this.getTaillePileOnInter(array_val_possib[x]) === hauteur &&
+                (this.getCouleurAssoOfInter(array_val_possib[x]) === this.getPlayerColor(Lyngk.Players.playerTwo,0)) ||
+                (this.getCouleurAssoOfInter(array_val_possib[x]) === this.getPlayerColor(Lyngk.Players.playerTwo,1))) {
+                pile_joueur2++;
+            }
+        }
+        if(pile_joueur1>pile_joueur2){
+            return "Player 1 !";
+        }
+        else{
+            if(pile_joueur1<pile_joueur2){
+                return "Player 2 !";
+            }
+        }
+        return "undefined";
+    };
 
-
+    this.callWinner=function(){
+        if(this.getScore(Lyngk.Players.playerOne)>this.getScore(Lyngk.Players.playerTwo)){
+            winner="Player One !";
+        }
+        else{
+            if(this.getScore(Lyngk.Players.playerOne)<this.getScore(Lyngk.Players.playerTwo)){
+                winner="Player Two !";
+            }
+            else{
+                winner=this.checkSubPile(4);
+                if(winner==="undefined"){
+                    winner=this.checkSubPile(3);
+                    if(winner==="undefined"){
+                        winner=this.checkSubPile(2);
+                        if(winner==="undefined"){
+                            winner=this.checkSubPile(1);
+                        }
+                    }
+                }
+            }
+        }
+        console.log("Le gagnant est : " + winner);
+    };
+*/
     this.getPlateauEtatCase= function(co){
         if(typeof co === 'number'){
             return plateau[co].getState();
@@ -322,6 +422,7 @@ Lyngk.Engine = function () {
     };
 
     this.checkColorClaimOponent=function(source,activePlayer){
+
         return (source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2,0) &&
             source.getCouleurAssociee() !== this.getPlayerColor((activePlayer + 1) % 2,1));
     };
@@ -329,6 +430,9 @@ Lyngk.Engine = function () {
     this.check_deplacement=function(source,dest) {
         var check;
         check = checkLegalLigne(source, dest);
+        if(source.getTaillePile()===0 || dest.getTaillePile()===0){
+            check=false;
+        }
         //AFFICHER LES CASES DU TAB VALIDES
         if (check) {
             check=this.checkSourceToDest(source,dest);
@@ -397,7 +501,7 @@ Lyngk.Engine = function () {
                 for (var x = source.getY() - 1; x > dest.getY(); x--) {
                     var tempo_int = source.getX() + x;
                     tempo_int = tempo_int.toString();
-                    if (this.getTaillePileOnInter(tempo_int).getTaillePile() > 0) {
+                    if (this.getTaillePileOnInter(tempo_int) > 0) {
                         return false;
                     }
                 }
