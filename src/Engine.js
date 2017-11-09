@@ -5,7 +5,7 @@ Lyngk.Color = {BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5};
 
 Lyngk.Players = {playerOne: 0, playerTwo: 1};
 
-//Lyngk.GameEtat = {PLAY:0, OVER:1};
+Lyngk.GameEtat = {PLAY:0, OVER:1};
 
 /**
  * @return {boolean}
@@ -25,23 +25,23 @@ Lyngk.Engine = function () {
         }
         return possibilites;
     };
-/*
+
     var winner;
 
     this.getWinner=function(){
         return winner;
     };
-*/
+
     var plateau=[];
 
     var activePlayer;
-    /*
+
     var gameState=Lyngk.GameEtat.PLAY;
 
     this.getGameState=function(){
         return gameState;
     };
-*/
+
     var claimedColor=[[null,null],[null,null]];
     var scorePlayer=[0,0];
 
@@ -278,11 +278,11 @@ Lyngk.Engine = function () {
     this.DeplacerVers=function(origin,destination){
         var deplacementValide=false;
 
-        //if(this.getGameState()===Lyngk.GameEtat.OVER){
-        //    console.log("JEU TERMINE");
-        //}
+        if(this.getGameState()===Lyngk.GameEtat.OVER){
+            console.log("JEU TERMINE");
+        }
 
-        //else {
+        else {
             var source = this.getCoordonCase(origin);
             var dest = this.getCoordonCase(destination);
             deplacementValide = this.check_deplacement(source, dest);
@@ -299,7 +299,7 @@ Lyngk.Engine = function () {
                     }
                 }
                 if (this.checkGetOnePoint(this.getActivePlayer(), dest)) {
-                    console.log("HOP 1 point pour le joueur : " + this.getActivePlayer());
+                    console.log(" 1 point pour le joueur : " + this.getActivePlayer());
                     scorePlayer[this.getActivePlayer()]++;
                     console.log("SON SCORE : " + this.getScore(this.getActivePlayer()));
                     while (dest.getTaillePile() > 0) {
@@ -314,7 +314,7 @@ Lyngk.Engine = function () {
                     activePlayer = Lyngk.Players.playerOne;
                 }
                 this.countPossibilities();
-                /*
+
                 console.log("Possibilities restants : " + this.getNbCoupPosForPlayer(this.getActivePlayer()));
                 if(this.getPlayerColor(this.getActivePlayer(),0)!==null && this.getPlayerColor((this.getActivePlayer()+1)%2,0)!==null)
                 if (this.repererColor(this.getPlayerColor(this.getActivePlayer(),0)) === 0 &&
@@ -324,12 +324,12 @@ Lyngk.Engine = function () {
                 if (gameState === Lyngk.GameEtat.OVER) {
                     this.callWinner();
                 }
-                */
-            //}
+
+            }
         }
         return deplacementValide;
     };
-    /*
+
     this.checkSubPile=function(hauteur){
         var pile_joueur1=0;
         var pile_joueur2=0;
@@ -381,7 +381,7 @@ Lyngk.Engine = function () {
         }
         console.log("Le gagnant est : " + winner);
     };
-*/
+
     this.getPlateauEtatCase= function(co){
         if(typeof co === 'number'){
             return plateau[co].getState();

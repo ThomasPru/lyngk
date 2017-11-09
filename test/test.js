@@ -387,7 +387,6 @@ LyngkTestCase.prototype.testHist31=function(){
 
 
 LyngkTestCase.prototype.testHist32=function() {
-    console.log("Test 32 ----------------------");
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
@@ -438,10 +437,8 @@ LyngkTestCase.prototype.testHist32=function() {
     //JOUEUR1
     jeu.DeplacerVers("C1","D2");
 
-
     //joueur2
     jeu.DeplacerVers("D7","C7");
-
 
     //JOUEUR1
     jeu.DeplacerVers("D2","B2");
@@ -478,22 +475,17 @@ LyngkTestCase.prototype.testHist32=function() {
     //JOUEUR1
     jeu.DeplacerVers("I7","H6");
 
-
     //joueur2
     jeu.DeplacerVers("F8","G9");
 
     //joueur1
-    console.log("Joueur actuel (0 pour j1 et 1 pour j2 ) :" + jeu.getActivePlayer());
     jeu.DeplacerVers("H6","C6");
-    console.log("AFTER -> ETAT H6, C6 : " + jeu.getTaillePileOnInter("H6") + " , " +jeu.getTaillePileOnInter("C6"));
-
 
     //joueur2
-    console.log("Joueur actuel (0 pour j1 et 1 pour j2 ) :" + jeu.getActivePlayer());
     jeu.DeplacerVers("H5","E2");
-    console.log("AFTER -> ETAT H5, E2 : " + jeu.getTaillePileOnInter("H5") + " , " +jeu.getTaillePileOnInter("E2"));
 
-
+    //---il n'y a plus aucun mouvement possible quand les  "jeu.repererColor" n'affichent plus rien
+    console.log("---------------------");
     console.log("joueur actuel : " + jeu.getActivePlayer());
     console.log("Couleur de player ACTUEL : " + jeu.getPlayerColor(jeu.getActivePlayer(),0) +" , " + jeu.getPlayerColor(jeu.getActivePlayer(),1));
     jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),0));
@@ -501,12 +493,6 @@ LyngkTestCase.prototype.testHist32=function() {
     jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),1));
 
 
-    console.log("FIIIINNNNNNNNNNNNNNNNNNNN" );
-    console.log(jeu.getGameState());
-    console.log(jeu.getWinner());
-
     assertTrue(jeu.getGameState()===Lyngk.GameEtat.OVER && jeu.getWinner()==="Player One !");
     //le jeu s'arrete lorsqu'il n'y a plus aucun coup a jouer,
-    //ayant un probleme dans la verification des derniers coups, on ne peut donc pas verifier les conditions
-    //de l'assert
 };
