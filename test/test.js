@@ -1,74 +1,76 @@
-'use strict';
+"use strict";
 
-Math.seedrandom('1234');
+Math.seedrandom("1234");
 
 var LyngkTestCase = TestCase("LyngkTestCase");
 
 
-LyngkTestCase.prototype.testA = function(){
-    var c = new Lyngk.Coordinates("A",1);
+LyngkTestCase.prototype.testA = function () {
+    var c = new Lyngk.Coordinates("A", 1);
     assertFalse(c.valid());
 };
 
-LyngkTestCase.prototype.testB = function(){
-    var compteur=0;
-    var lettre = ['A','B','C','D','E','F','G','H','I'];
-
-    for(var j=0;j<lettre.length;j++) {
-        for (var i = 1; i < 10; i++) {
-            var co = new Lyngk.Coordinates(lettre[j],i);
-            if(co.valid()){
-                compteur++;
-            }
+LyngkTestCase.prototype.testB = function () {
+    var counter = 0;
+    var co;
+    var index;
+    var inter;
+    for (index = 0; index < Lyngk.BOARD_GAME.length; index += 1) {
+        co=Lyngk.BOARD_GAME[index];
+        inter = new Lyngk.Coordinates(co[0], co[1]);
+        if (inter.valid()) {
+            counter += 1;
         }
     }
-    assertEquals(compteur,43);
+    assertEquals(counter, 43);
 };
 
 
-LyngkTestCase.prototype.testC = function(){
-    var c = new Lyngk.Coordinates('B',4);
-    assertTrue(c.toString()==='B4');
+LyngkTestCase.prototype.testC = function () {
+    var c = new Lyngk.Coordinates("B", 4);
+    assertTrue(c.toString() === "B4");
 };
 
-LyngkTestCase.prototype.testD = function(){
-    var c = new Lyngk.Coordinates('A',1);
-    assertTrue(c.toString()==="invalid");
+LyngkTestCase.prototype.testD = function () {
+    var c = new Lyngk.Coordinates("A", 1);
+    assertTrue(c.toString() === "invalid");
 };
 
-LyngkTestCase.prototype.testE = function(){
-    var c = new Lyngk.Coordinates('B',4);
+LyngkTestCase.prototype.testE = function () {
+    var c = new Lyngk.Coordinates("B", 4);
     assertEquals(c.toString(), c.clone().toString());
 };
 
-LyngkTestCase.prototype.testHist6 = function(){
-    var c = new Lyngk.Coordinates('B',4);
-    var hash= c.hash();
-    assertEquals(hash,24);
+LyngkTestCase.prototype.testHist6 = function () {
+    var c = new Lyngk.Coordinates("B", 4);
+    var hash = c.hash();
+    assertEquals(hash, 24);
 };
 
-LyngkTestCase.prototype.testHist7 = function(){
+LyngkTestCase.prototype.testHist7 = function () {
     var c = new Lyngk.Intersection();
-    assertEquals(c.getState(),Lyngk.State.VACANT);
+    assertEquals(c.getState(), Lyngk.State.VACANT);
 
 };
 
-LyngkTestCase.prototype.testHist8 = function(){
-    var inter = new Lyngk.Intersection('B',2);
+LyngkTestCase.prototype.testHist8 = function () {
+    var inter = new Lyngk.Intersection("B", 2);
     inter.poserPiece(Lyngk.Color.BLUE);
-    assertTrue(inter.getState() === Lyngk.State.ONE_PIECE && inter.getCouleurAssociee()===Lyngk.Color.BLUE );
+    assertTrue(inter.getState() === Lyngk.State.ONE_PIECE &&
+        inter.getColorAssociated() === Lyngk.Color.BLUE);
 };
 
 
-LyngkTestCase.prototype.testHist9 = function(){
-    var inter = new Lyngk.Intersection('B',2);
+LyngkTestCase.prototype.testHist9 = function () {
+    var inter = new Lyngk.Intersection("B", 2);
     inter.poserPiece(Lyngk.Color.BLUE);
     inter.poserPiece(Lyngk.Color.RED);
-    assertTrue(inter.getState() === Lyngk.State.STACK && inter.getCouleurAssociee()===Lyngk.Color.RED );
+    assertTrue(inter.getState() === Lyngk.State.STACK &&
+        inter.getColorAssociated() === Lyngk.Color.RED);
 };
 
-LyngkTestCase.prototype.testHist10 = function(){
-    var inter = new Lyngk.Intersection('B',2);
+LyngkTestCase.prototype.testHist10 = function () {
+    var inter = new Lyngk.Intersection("B", 2);
     inter.poserPiece(Lyngk.Color.BLUE);
     inter.poserPiece(Lyngk.Color.RED);
     inter.poserPiece(Lyngk.Color.GREEN);
@@ -77,131 +79,108 @@ LyngkTestCase.prototype.testHist10 = function(){
     assertTrue(inter.getState() === Lyngk.State.FULL_STACK);
 };
 
-//histoire 11
 LyngkTestCase.prototype.testHist11 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_One();
-    var compteur_one_piece=0;
+    var cpt_one_piece = 0;
 
-    for(var i=0;i<jeu.getSizePlat();i++){
-        if(jeu.getPlateauEtatCase(i)=== Lyngk.State.ONE_PIECE) {
-            compteur_one_piece++;
+    for (var i = 0; i < jeu.getSizePlat(); i +=1) {
+        if (jeu.getPlateauStateCase(i) === Lyngk.State.ONE_PIECE) {
+            cpt_one_piece += 1;
         }
     }
-    assertEquals(compteur_one_piece,43);
+    assertEquals(cpt_one_piece, 43);
 };
 
-//histoire 12
-LyngkTestCase.prototype.testHist12 = function(){
+LyngkTestCase.prototype.testHist12 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    var cpt_ivoire=0;
-    var cpt_bleu=0;
-    var cpt_rouge=0;
-    var cpt_noir=0;
-    var cpt_vert=0;
-    var cpt_blanc=0;
+    var cpt=[0,0,0,0,0,0];
 
-    for(var i=0;i<jeu.getSizePlat();i++){
+    for (var i = 0; i < jeu.getSizePlat(); i++) {
         //BLACK: 0, IVORY: 1, BLUE: 2, RED: 3, GREEN: 4, WHITE: 5
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.IVORY){
-            cpt_ivoire++;
-        }
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.BLUE){
-            cpt_bleu++;
-        }
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.RED){
-            cpt_rouge++;
-        }
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.BLACK){
-            cpt_noir++;
-        }
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.GREEN){
-            cpt_vert++;
-        }
-        if(jeu.getCouleurAssoOfInter(i) === Lyngk.Color.WHITE){
-            cpt_blanc++;
-        }
+        cpt[jeu.getColorOfInter(i)]++;
     }
-    assertTrue(cpt_ivoire===8 && cpt_bleu===8 && cpt_rouge===8 && cpt_noir===8 && cpt_vert===8 && cpt_blanc===3);
+    assertTrue(cpt[0] === 8 && cpt[1] === 8 && cpt[2] === 8 && cpt[3] === 8 && cpt[4] === 8 && cpt[5] === 3);
 };
 
 
-LyngkTestCase.prototype.testHist13 = function(){
+LyngkTestCase.prototype.testHist13 = function () {
     var jeu = new Lyngk.Engine();
-    jeu.Init_plateau_One();
-    var cpt_valid_taillle_inter=0;
-    for(var i=0;i<jeu.getSizePlat();i++){
-        if(jeu.getTaillePileOnInter(i)===1){
-            cpt_valid_taillle_inter++;
+    jeu.Init_plateau_One ();
+    var cpt_valid_size_inter = 0;
+    for (var i = 0; i < jeu.getSizePlat(); i++) {
+        if (jeu.getSizePileOnInter(i) === 1) {
+            cpt_valid_size_inter++;
         }
     }
-    assertEquals(cpt_valid_taillle_inter ,jeu.getSizePlat());
+    assertEquals(cpt_valid_size_inter, jeu.getSizePlat());
 };
 
-LyngkTestCase.prototype.testHist14 = function(){
+LyngkTestCase.prototype.testHist14 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_One();
-    var cpt_intersection_non_vide=0;
-    var cpt_couleurAssocie_intersec_valide=0;
-    var Identificateur_pile=0;
-    for(var i=0;i<jeu.getSizePlat();i++){
-        if(jeu.getTaillePileOnInter(i)>=1){
-            cpt_intersection_non_vide++;
-            if(jeu.getCouleurAssoOfInter(i) === jeu.getCouleurFromPieceFromInterS(i,jeu.getTaillePileOnInter(i)-1)){
-                cpt_couleurAssocie_intersec_valide++;
+    var cpt_intersection_non_empty = 0;
+    var cpt_ColorAssociated_intersection_valid = 0;
+    for (var i = 0; i < jeu.getSizePlat(); i++) {
+        if (jeu.getSizePileOnInter(i) >= 1) {
+            cpt_intersection_non_empty++;
+            if (jeu.getColorOfInter(i) === jeu.getColorFromPieceFromInterS(i, jeu.getSizePileOnInter(i) - 1)) {
+                cpt_ColorAssociated_intersection_valid++;
             }
         }
     }
-    assertTrue(cpt_intersection_non_vide===jeu.getSizePlat() && cpt_couleurAssocie_intersec_valide===jeu.getSizePlat() && Identificateur_pile===0);
+    assertTrue(cpt_intersection_non_empty === jeu.getSizePlat() &&
+        cpt_ColorAssociated_intersection_valid === jeu.getSizePlat());
 };
 
-LyngkTestCase.prototype.testHist15 = function() {
+LyngkTestCase.prototype.testHist15 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    var colorSourceAvantDep=jeu.getCoordonCase("A3").getCouleurAssociee();
-    jeu.DeplacerVers("A3","B3");
-    //verifier que A3 soit vide (vacant)  && B3 couleur assosier = piece qui etait sur A3)
-    assertTrue(jeu.getPlateauEtatCase("A3")===Lyngk.State.VACANT && jeu.getCoordonCase("B3").getCouleurAssociee() === colorSourceAvantDep);
+    var colorSourceBeforeDep = jeu.getCoordinateCase("A3").getColorAssociated();
+    jeu.moveTo("A3", "B3");
+    assertTrue(jeu.getPlateauStateCase("A3") === Lyngk.State.VACANT &&
+        jeu.getCoordinateCase("B3").getColorAssociated() === colorSourceBeforeDep);
 };
 
-LyngkTestCase.prototype.testHist16 = function() {
+LyngkTestCase.prototype.testHist16 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.DeplacerVers("A3","B3");
-    var colorSourceAvantDep=jeu.getCoordonCase("B3").getCouleurAssociee();
-    jeu.DeplacerVers("B3","B2");
-    assertTrue(jeu.getPlateauEtatCase("B3") === Lyngk.State.VACANT && jeu.getCoordonCase("B2").getCouleurAssociee() === colorSourceAvantDep);
+    jeu.moveTo("A3", "B3");
+    var colorSourceBeforeDep = jeu.getCoordinateCase("B3").getColorAssociated();
+    jeu.moveTo("B3", "B2");
+    assertTrue(jeu.getPlateauStateCase("B3") === Lyngk.State.VACANT &&
+        jeu.getCoordinateCase("B2").getColorAssociated() === colorSourceBeforeDep);
 };
 
 LyngkTestCase.prototype.testHist17 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.DeplacerVers("B2","B3");
-    var couleurB3=jeu.getCoordonCase("B3").getCouleurAssociee();
-    jeu.DeplacerVers("B3","B2");
-    assertTrue(jeu.getPlateauEtatCase("B3") !== Lyngk.State.VACANT && couleurB3===jeu.getCoordonCase("B3").getCouleurAssociee());
+    jeu.moveTo("B2", "B3");
+    var ColorB3 = jeu.getCoordinateCase("B3").getColorAssociated();
+    jeu.moveTo("B3", "B2");
+    assertTrue(jeu.getPlateauStateCase("B3") !== Lyngk.State.VACANT &&
+        ColorB3 === jeu.getCoordinateCase("B3").getColorAssociated());
 };
 
 LyngkTestCase.prototype.testHist18 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    var couleurB3=jeu.getCoordonCase("B3").getCouleurAssociee();
-    jeu.DeplacerVers("B3","C2");
-    assertTrue(jeu.getPlateauEtatCase("B3") !== Lyngk.State.VACANT && couleurB3===jeu.getCoordonCase("B3").getCouleurAssociee());
+    var ColorB3 = jeu.getCoordinateCase("B3").getColorAssociated();
+    jeu.moveTo("B3", "C2");
+    assertTrue(jeu.getPlateauStateCase("B3") !== Lyngk.State.VACANT &&
+        ColorB3 === jeu.getCoordinateCase("B3").getColorAssociated());
 };
 
 
 LyngkTestCase.prototype.testHist19 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-
-    var couleurH5=jeu.getCoordonCase("H5").getCouleurAssociee();
-
-    jeu.DeplacerVers("H5","H8");
-
-    assertTrue(jeu.getPlateauEtatCase("H5") !==Lyngk.State.VACANT && couleurH5===jeu.getCoordonCase("H5").getCouleurAssociee());
+    var ColorH5 = jeu.getCoordinateCase("H5").getColorAssociated();
+    jeu.moveTo("H5", "H8");
+    assertTrue(jeu.getPlateauStateCase("H5") !== Lyngk.State.VACANT &&
+        ColorH5 === jeu.getCoordinateCase("H5").getColorAssociated());
 };
 
 
@@ -209,77 +188,74 @@ LyngkTestCase.prototype.testHist20 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.DeplacerVers("E3","E4");
-    jeu.DeplacerVers("E4","E5");
-    jeu.DeplacerVers("E5","E6");
-    jeu.DeplacerVers("E6","F7");
+    jeu.moveTo("E3", "E4");
+    jeu.moveTo("E4", "E5");
+    jeu.moveTo("E5", "E6");
+    jeu.moveTo("E6", "F7");
 
-    var couleurSav=jeu.getCoordonCase("F7").getCouleurAssociee();
+    var ColorSav = jeu.getCoordinateCase("F7").getColorAssociated();
+    jeu.moveTo("F7", "G7");
 
-    jeu.DeplacerVers("F7","G7");
-
-    assertTrue(jeu.getPlateauEtatCase("F7") ===Lyngk.State.FULL_STACK
-        && couleurSav===jeu.getCoordonCase("F7").getCouleurAssociee());
+    assertTrue(jeu.getPlateauStateCase("F7") === Lyngk.State.FULL_STACK &&
+        ColorSav === jeu.getCoordinateCase("F7").getColorAssociated());
 };
 
 LyngkTestCase.prototype.testHist21 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.DeplacerVers("A3","B3");
+    jeu.moveTo("A3", "B3");
 
-    var couleurSav=jeu.getCoordonCase("C3").getCouleurAssociee();
-    jeu.DeplacerVers("C3","B3");
+    var ColorSav = jeu.getCoordinateCase("C3").getColorAssociated();
+    jeu.moveTo("C3", "B3");
 
-    assertTrue(jeu.getPlateauEtatCase("C3") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("C3").getCouleurAssociee());
+    assertTrue(jeu.getPlateauStateCase("C3") !== Lyngk.State.VACANT &&
+        ColorSav === jeu.getCoordinateCase("C3").getColorAssociated());
 
 };
 
 LyngkTestCase.prototype.testHist22 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-
-    jeu.DeplacerVers("E3","E4");
-
-
-    var couleurSav=jeu.getCoordonCase("E5").getCouleurAssociee();
+    jeu.moveTo("E3", "E4");
+    var ColorSav = jeu.getCoordinateCase("E5").getColorAssociated();
     //impossible car la pile en E4 > la pile en E5
-    jeu.DeplacerVers("E5","E4");
+    jeu.moveTo("E5", "E4");
 
-    assertTrue(jeu.getPlateauEtatCase("E5") !==Lyngk.State.VACANT && couleurSav===jeu.getCoordonCase("E5").getCouleurAssociee());
-
+    assertTrue(jeu.getPlateauStateCase("E5") !== Lyngk.State.VACANT &&
+        ColorSav === jeu.getCoordinateCase("E5").getColorAssociated());
 };
 
 LyngkTestCase.prototype.testHist23 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    var IsColorTwiceInFuturePileC5=false;
+    var IsColorTwiceInFuturePileC5 = false;
 
-    var compteur=[0,0,0,0,0,0];
+    var counter = [0, 0, 0, 0, 0, 0];
 
-    compteur[jeu.getCouleurAssoOfInter("E4")]++;
-    compteur[jeu.getCouleurAssoOfInter("E5")]++;
-    compteur[jeu.getCouleurAssoOfInter("E6")]++;
-    compteur[jeu.getCouleurAssoOfInter("D5")]++;
-    compteur[jeu.getCouleurAssoOfInter("C5")]++;
+    counter[jeu.getColorOfInter("E4")]++;
+    counter[jeu.getColorOfInter("E5")]++;
+    counter[jeu.getColorOfInter("E6")]++;
+    counter[jeu.getColorOfInter("D5")]++;
+    counter[jeu.getColorOfInter("C5")]++;
 
-    for (var i=0;i<5;i++){
-        if(compteur[i]>1){
-            IsColorTwiceInFuturePileC5=true;
+    for (var i = 0; i < 5; i++) {
+        if (counter[i] > 1) {
+            IsColorTwiceInFuturePileC5 = true;
         }
     }
-    jeu.DeplacerVers("E4","E5");
-    jeu.DeplacerVers("E5","E6");
-    jeu.DeplacerVers("E6","D5");
-    jeu.DeplacerVers("D5","C5");
+    jeu.moveTo("E4", "E5");
+    jeu.moveTo("E5", "E6");
+    jeu.moveTo("E6", "D5");
+    jeu.moveTo("D5", "C5");
 
-    assertTrue((jeu.getPlateauEtatCase("C5") !==Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===true) ||
-        (jeu.getPlateauEtatCase("C5") ===Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5===false));
+    assertTrue((jeu.getPlateauStateCase("C5") !== Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5 === true) ||
+        (jeu.getPlateauStateCase("C5") === Lyngk.State.FULL_STACK && IsColorTwiceInFuturePileC5 === false));
 };
 
 LyngkTestCase.prototype.testHist24 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerOne);
+    assertTrue(jeu.getActivePlayer() === Lyngk.Players.playerOne);
 };
 
 
@@ -287,212 +263,202 @@ LyngkTestCase.prototype.testHist25 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    //le joueur 1 joue son coup
-    jeu.DeplacerVers("E4","E5");
+    //player 1
+    jeu.moveTo("E4", "E5");
 
-    assertTrue(jeu.getActivePlayer()===Lyngk.Players.playerTwo);
+    assertTrue(jeu.getActivePlayer() === Lyngk.Players.playerTwo);
 };
 
 LyngkTestCase.prototype.testHist26 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
-    jeu.DeplacerVers("A3","B3");
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
+    jeu.claimColor(Lyngk.Color.RED);
+    jeu.moveTo("A3", "B3");
+    jeu.claimColor(Lyngk.Color.GREEN);
 
-    assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne,0) === Lyngk.Color.RED
-        && jeu.getPlayerColor(Lyngk.Players.playerTwo,0) === Lyngk.Color.GREEN);
+    assertTrue(jeu.getPlayerColor(Lyngk.Players.playerOne, 0) === Lyngk.Color.RED &&
+        jeu.getPlayerColor(Lyngk.Players.playerTwo, 0) === Lyngk.Color.GREEN);
 };
 
 LyngkTestCase.prototype.testHist27 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    //joueur1
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
-    jeu.DeplacerVers("E3","E4");
+    //player1
+    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.moveTo("E3", "E4");
 
-    //joueur2
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
-    jeu.DeplacerVers("C3","C4");
+    //player2
+    jeu.claimColor(Lyngk.Color.RED);
+    jeu.moveTo("C3", "C4");
 
-    //joueur1
-    jeu.DeplacerVers("E4","E5");
+    //player1
+    jeu.moveTo("E4", "E5");
 
-    //joueur2
-    jeu.DeplacerVers("C4","C5");
+    //player2
+    jeu.moveTo("C4", "C5");
 
-    //joueur1
-    jeu.DeplacerVers("E5","D4");
+    //player1
+    jeu.moveTo("E5", "D4");
 
-    //joueur2
-    jeu.DeplacerVers("G5","G6");
+    //player2
+    jeu.moveTo("G5", "G6");
 
-    //joueur1, marque un point
-    jeu.DeplacerVers("D4","D5");
+    //player1, marque un point
+    jeu.moveTo("D4", "D5");
 
-    //joueur2
-    jeu.DeplacerVers("C6","C7");
+    //player2
+    jeu.moveTo("C6", "C7");
 
-    assertTrue(jeu.getScore(Lyngk.Players.playerOne,4)===1 && jeu.nbPiecesRes()===38);
+    assertTrue(jeu.getScore(Lyngk.Players.playerOne, 4) === 1 &&
+        jeu.nbPiecesRes() === 38);
 };
 
 LyngkTestCase.prototype.testHist28 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
-    jeu.DeplacerVers("E3","E4");
+    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.moveTo("E3", "E4");
 
-    //joueur2 ( coup impossible car vert reclamé par j1
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
+    //player 2 ( impossible move because color claimed by 1)
+    jeu.claimColor(Lyngk.Color.RED);
 
-    var taillePileSavE4=jeu.getTaillePileOnInter("E4");
-    var taillePileSavE5=jeu.getTaillePileOnInter("E5");
-    jeu.DeplacerVers("E4","E5");
+    var sizeE4 = jeu.getSizePileOnInter("E4");
+    var SizeE5 = jeu.getSizePileOnInter("E5");
+    jeu.moveTo("E4", "E5");
 
-    assertTrue(taillePileSavE4 === jeu.getTaillePileOnInter("E4") && taillePileSavE5===jeu.getTaillePileOnInter("E5"));
+    assertTrue(sizeE4 === jeu.getSizePileOnInter("E4") &&
+        SizeE5 === jeu.getSizePileOnInter("E5"));
 };
 
-LyngkTestCase.prototype.testHist29=function () {
+LyngkTestCase.prototype.testHist29 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    assertTrue(jeu.getNbCoupPosForPlayer(jeu.getActivePlayer())===40);
+    assertTrue(jeu.getNbCoupPosForPlayer(jeu.getActivePlayer()) === 40);
 };
 
 
-LyngkTestCase.prototype.testHist30=function () {
+LyngkTestCase.prototype.testHist30 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    jeu.claimColor(Lyngk.Color.BLACK);
+    jeu.moveTo("B3", "B4");
+
+    assertTrue(jeu.getNbCoupPosForPlayer(Lyngk.Players.playerTwo) === 32);
+};
+
+LyngkTestCase.prototype.testHist31 = function () {
+    var jeu = new Lyngk.Engine();
+    jeu.Init_plateau_FULL();
+    var directionPossibleC1 = jeu.getDirectionValidOfInters("C1");
+    var directionPossibleG5 = jeu.getDirectionValidOfInters("G5");
+
+    assertTrue(directionPossibleC1 === 2 && directionPossibleG5 === 3);
+};
+
+
+LyngkTestCase.prototype.testHist32 = function () {
     var jeu = new Lyngk.Engine();
     jeu.Init_plateau_FULL();
 
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLACK);
+    //player1
+    jeu.claimColor(Lyngk.Color.GREEN);
+    jeu.moveTo("E3", "E4");
 
-    //console.log("couleur de la case B4 avant deplace :" + jeu.getCouleurAssoOfInter("B4"));
-    jeu.DeplacerVers("B3","B4");
+    //player2
+    jeu.claimColor(Lyngk.Color.RED);
+    jeu.moveTo("C2", "C3");
 
-    assertTrue(jeu.getNbCoupPosForPlayer(Lyngk.Players.playerTwo)===32);
-};
+    //player1
+    jeu.claimColor(Lyngk.Color.BLUE);
+    jeu.moveTo("E4", "E5");
 
-LyngkTestCase.prototype.testHist31=function(){
-    var jeu= new Lyngk.Engine();
-    jeu.Init_plateau_FULL();
-    var direcPossibleC1 = jeu.getDirecPossibOfInters("C1");
-    var direcPossibleG5 = jeu.getDirecPossibOfInters("G5");
+    //player2
+    jeu.claimColor(Lyngk.Color.BLACK);
+    jeu.moveTo("C3", "B3");
 
-    //C1 est sur un bord, cette inters n'a que 2 coups possibles ( puisque les deux possibilites n'ont pas la meme couleur associee )
-    //G5 qui a 6 directions, n'en a que trois car 3 pieces autour de cette inters ont la meme couleur que celle ci
-    assertTrue(direcPossibleC1===2 && direcPossibleG5===3);
-};
+    //player1
+    jeu.moveTo("F4", "F5");
 
+    //player2
+    jeu.moveTo("B3", "D3");
 
-LyngkTestCase.prototype.testHist32=function() {
-    var jeu = new Lyngk.Engine();
-    jeu.Init_plateau_FULL();
+    //player1
+    jeu.moveTo("F5", "F6");
 
-    //joueur1
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.GREEN);
-    jeu.DeplacerVers("E3","E4");
+    //player2
+    jeu.moveTo("B4", "C5");
 
+    //player1
+    jeu.moveTo("F6", "G6");
 
-    //joueur2
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.RED);
-    jeu.DeplacerVers("C2","C3");
+    //player2
+    jeu.moveTo("C5", "D6");
 
+    //player1
+    jeu.moveTo("G6", "H7");
 
-    //joueur1
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLUE);
-    jeu.DeplacerVers("E4","E5");
+    //player2
+    jeu.moveTo("D6", "D7");
 
+    //player1
+    jeu.moveTo("C1", "D2");
 
-    //joueur2
-    jeu.claimColor(jeu.getActivePlayer(),Lyngk.Color.BLACK);
-    jeu.DeplacerVers("C3","B3");
+    //player2
+    jeu.moveTo("D7", "C7");
 
+    //player1
+    jeu.moveTo("D2", "B2");
 
-    //joueur1
-    jeu.DeplacerVers("F4","F5");
-
-    //joueur2
-    jeu.DeplacerVers("B3","D3");
-
-    //JOUEUR1
-    jeu.DeplacerVers("F5","F6");
-
-    //joueur2
-    jeu.DeplacerVers("B4","C5");
-
-    //JOUEUR1
-    jeu.DeplacerVers("F6","G6");
-
-    //joueur2
-    jeu.DeplacerVers("C5","D6");
-
-    //JOUEUR1
-    jeu.DeplacerVers("G6","H7");
-
-    //joueur2
-    jeu.DeplacerVers("D6","D7");
-
-    //JOUEUR1
-    jeu.DeplacerVers("C1","D2");
-
-    //joueur2
-    jeu.DeplacerVers("D7","C7");
-
-    //JOUEUR1
-    jeu.DeplacerVers("D2","B2");
-
-    //joueur2
-    jeu.DeplacerVers("E7","F8");
+    //player2
+    jeu.moveTo("E7", "F8");
 
 
-    //JOUEUR1
-    jeu.DeplacerVers("B5","C6");
+    //player1
+    jeu.moveTo("B5", "C6");
 
-    //joueur2
-    jeu.DeplacerVers("G8","H8");
+    //player2
+    jeu.moveTo("G8", "H8");
 
 
-    //JOUEUR1
-    jeu.DeplacerVers("G7","G5");
+    //player1
+    jeu.moveTo("G7", "G5");
 
-    //joueur2
-    jeu.DeplacerVers("G4","G3");
+    //player2
+    jeu.moveTo("G4", "G3");
 
-    //JOUEUR1
-    jeu.DeplacerVers("B2","D4");
+    //player1
+    jeu.moveTo("B2", "D4");
 
-    //joueur2
-    jeu.DeplacerVers("F3","H5");
+    //player2
+    jeu.moveTo("F3", "H5");
 
-    //JOUEUR1
-    jeu.DeplacerVers("D4","D5");
+    //player1
+    jeu.moveTo("D4", "D5");
 
-    //joueur2
-    jeu.DeplacerVers("E6","C4");
+    //player2
+    jeu.moveTo("E6", "C4");
 
-    //JOUEUR1
-    jeu.DeplacerVers("I7","H6");
+    //player1
+    jeu.moveTo("I7", "H6");
 
-    //joueur2
-    jeu.DeplacerVers("F8","G9");
+    //player2
+    jeu.moveTo("F8", "G9");
 
-    //joueur1
-    jeu.DeplacerVers("H6","C6");
+    //player1
+    jeu.moveTo("H6", "C6");
 
-    //joueur2
-    jeu.DeplacerVers("H5","E2");
+    //player2
+    jeu.moveTo("H5", "E2");
 
-    //---il n'y a plus aucun mouvement possible quand les  "jeu.repererColor" n'affichent plus rien
     console.log("---------------------");
-    console.log("joueur actuel : " + jeu.getActivePlayer());
-    console.log("Couleur de player ACTUEL : " + jeu.getPlayerColor(jeu.getActivePlayer(),0) +" , " + jeu.getPlayerColor(jeu.getActivePlayer(),1));
-    jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),0));
+    console.log("Current player : " + jeu.getActivePlayer());
+    console.log("Current player's color : " + jeu.getPlayerColor(jeu.getActivePlayer(), 0) + " , " + jeu.getPlayerColor(jeu.getActivePlayer(), 1));
+    jeu.findColor(jeu.getPlayerColor(jeu.getActivePlayer(), 0));
     console.log("------");
-    jeu.repererColor(jeu.getPlayerColor(jeu.getActivePlayer(),1));
+    jeu.findColor(jeu.getPlayerColor(jeu.getActivePlayer(), 1));
 
-
-    assertTrue(jeu.getGameState()===Lyngk.GameEtat.OVER && jeu.getWinner()==="Player One !");
-    //le jeu s'arrete lorsqu'il n'y a plus aucun coup a jouer,
+    assertTrue(jeu.getGameState() === Lyngk.GameEtat.OVER && jeu.getWinner() === Lyngk.Players.playerOne);
 };

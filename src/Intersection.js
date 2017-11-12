@@ -2,90 +2,71 @@
 
 Lyngk.State = {VACANT: 0, ONE_PIECE: 1, STACK: 2, FULL_STACK: 3};
 
-Lyngk.Intersection = function (x,y) {
-    var state= Lyngk.State.VACANT;
-    var couleurAssociee;
-    var pile=[];
-    var coor=new Lyngk.Coordinates(x, y);
+Lyngk.Intersection = function (x, y) {
+    var state = Lyngk.State.VACANT;
+    var colorId;
+    var pile = [];
+    var coordinate = new Lyngk.Coordinates(x, y);
 
-    this.getX=function(){
-        return coor.getX();
+    this.getX = function () {
+        return coordinate.getX();
     };
 
-    this.getY=function(){
-        return coor.getY();
+    this.getY = function () {
+        return coordinate.getY();
     };
 
-    this.getHashedCoor=function(){
-        return coor.hash();
+    this.getHashCoordinate = function () {
+        return coordinate.hash();
     };
 
-    this.getCoord = function(){
-        return coor;
+    this.getCoordinate = function () {
+        return coordinate;
     };
 
     this.getState = function () {
         return state;
     };
 
-    this.getCouleurPieceFromPile=function(j){
-        return pile[j].getCouleur();
+    this.getColorPieceFromPile = function (j) {
+        return pile[j].getColor();
     };
 
-    this.getCouleurAssociee = function(){
-        return couleurAssociee;
+    this.getColorAssociated = function () {
+        return colorId;
     };
 
-    this.getTaillePile = function(){
+    this.getSizeStack = function () {
         return pile.length;
     };
 
-    this.poserPiece = function(couleur){
-        if(this.getTaillePile()<5) {
-            var piece = new Lyngk.Piece(couleur);
-            pile.push(piece);
-            couleurAssociee = piece.getCouleur();
-            if (this.getTaillePile() === 1) {
-                state = Lyngk.State.ONE_PIECE;
-            }
-            else {
-                if (this.getTaillePile() > 1 && this.getTaillePile() < 5) {
-                    state = Lyngk.State.STACK;
-                }
-                else {
-                    if (this.getTaillePile() === 5) {
-                        state = Lyngk.State.FULL_STACK;
-                    }
-                }
+    this.poserPiece = function (Color) {
+        var piece = new Lyngk.Piece(Color);
+        pile.push(piece);
+        colorId = piece.getColor();
+        if (this.getSizeStack() === 1) {
+            state = Lyngk.State.ONE_PIECE;
+        } else {
+            if (this.getSizeStack() > 1 && this.getSizeStack() < 5) {
+                state = Lyngk.State.STACK;
+            } else {
+                state = Lyngk.State.FULL_STACK;
             }
         }
     };
 
-    this.retirerPiece = function(){
-        if(this.getTaillePile()>0) {
-            pile.pop();
-
-            if(this.getTaillePile()===0){
-                state = Lyngk.State.VACANT;
-                couleurAssociee=null;
+    this.removePiece = function () {
+        pile.pop();
+        if (this.getSizeStack() === 0) {
+            state = Lyngk.State.VACANT;
+            colorId = null;
+        } else {
+            colorId = this.getColorPieceFromPile(this.getSizeStack() - 1);
+            if (this.getSizeStack() === 1) {
+                state = Lyngk.State.ONE_PIECE;
+            } else {
+                state = Lyngk.State.STACK;
             }
-            else {
-                couleurAssociee=this.getCouleurPieceFromPile(this.getTaillePile()-1);
-                if (this.getTaillePile() === 1) {
-                    state = Lyngk.State.ONE_PIECE;
-                }
-                else {
-                    if (this.getTaillePile() > 1 && this.getTaillePile() < 5) {
-                        state = Lyngk.State.STACK;
-                    }
-                    else{
-                        if (this.getTaillePile() >= 5) {
-                            state = Lyngk.State.FULL_STACK;
-                        }
-                    }
-                }
-            }
-
         }
     };
 };
